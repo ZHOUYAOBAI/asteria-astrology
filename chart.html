@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>星图查询 — Kingsley · 星语占星馆</title>
-<meta name="description" content="输入出生日期、时间与城市，免费查询你的太阳星座、月亮星座、上升星座与四元素分布，并生成简化星盘图。">
+<title>星象师工作台 — Kingsley · 星语占星馆</title>
+<meta name="description" content="专业星象师工具：全行星排盘、宫位相位、本命解读、双人合盘、行运过境与客户档案，一站完成。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230A1226' stroke='%23D9B36B' stroke-width='1.5'/%3E%3Cpath d='M32 10c1.4 13.5 8.5 20.6 22 22-13.5 1.4-20.6 8.5-22 22-1.4-13.5-8.5-20.6-22-22 13.5-1.4 20.6-8.5 22-22z' fill='%23D9B36B'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://miaoda.feishu.cn">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Cinzel:wght@400;600;700;900&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
@@ -54,211 +54,317 @@ header.scrolled{background:rgba(5,9,20,.82);backdrop-filter:blur(14px);-webkit-b
 .nav-back a:hover{color:var(--gold-soft)}
 .nav-cta{padding:11px 26px;border:1px solid var(--gold);color:var(--gold-soft);font-size:14px;letter-spacing:.14em;border-radius:2px;transition:all .35s}
 .nav-cta:hover{background:var(--gold);color:#1A1206;box-shadow:0 0 26px rgba(217,179,107,.45)}
-.page-head{padding-top:140px;text-align:center}
+.page-head{padding-top:132px;text-align:center}
 .page-head .en{font-family:var(--display);color:var(--gold-dim);font-size:12px;letter-spacing:.5em;margin-bottom:14px}
-.page-head h1{font-family:var(--serif);font-weight:900;font-size:clamp(32px,5vw,52px);letter-spacing:.08em;color:#F7F4EC}
+.page-head h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.6vw,50px);letter-spacing:.08em;color:#F7F4EC}
 .page-head h1 .accent{color:var(--gold-soft)}
-.page-head p{color:var(--muted);max-width:560px;margin:18px auto 0;font-size:15.5px;letter-spacing:.03em}
-.chart-panel{margin-top:44px;background:var(--card);border:1px solid var(--line-soft);border-radius:8px;padding:52px 46px;position:relative;overflow:hidden}
-.chart-panel::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 300px at 50% 0%,rgba(217,179,107,.07),transparent 70%);pointer-events:none}
-.chart-form{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap;position:relative}
-.field{display:flex;flex-direction:column;gap:10px;flex:1;min-width:190px}
-.field label{font-size:12.5px;color:var(--gold-dim);letter-spacing:.26em}
+.page-head p{color:var(--muted);max-width:620px;margin:16px auto 0;font-size:15px;letter-spacing:.03em}
+
+/* ===== 工作台 ===== */
+.wb{margin-top:36px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line-soft);position:relative}
+.tab-btn{
+  padding:14px 26px;font-size:14.5px;letter-spacing:.14em;color:var(--muted);
+  border-bottom:2px solid transparent;transition:all .3s;position:relative;top:1px;
+}
+.tab-btn:hover{color:var(--gold-soft)}
+.tab-btn.on{color:var(--gold-soft);border-bottom-color:var(--gold)}
+.tab-panel{display:none;animation:rise .5s ease both}
+.tab-panel.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.panel-inner{margin-top:34px;display:grid;grid-template-columns:1fr 320px;gap:26px;align-items:start}
+.panel-inner.solo{grid-template-columns:1fr}
+@media(max-width:900px){.panel-inner{grid-template-columns:1fr}}
+.form-card{background:var(--card);border:1px solid var(--line-soft);border-radius:8px;padding:30px 28px;position:relative;overflow:hidden}
+.form-card::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 240px at 50% 0%,rgba(217,179,107,.07),transparent 70%);pointer-events:none}
+.form-card h4{font-family:var(--serif);font-size:15px;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:20px}
+.f-row{display:flex;gap:16px;flex-wrap:wrap;position:relative}
+.f-row+.f-row{margin-top:14px}
+.field{display:flex;flex-direction:column;gap:8px;flex:1;min-width:150px}
+.field label{font-size:12px;color:var(--gold-dim);letter-spacing:.22em}
 .field input,.field select{
   background:rgba(5,9,20,.6);border:1px solid var(--line-soft);border-radius:2px;color:var(--text);
-  font-family:var(--sans);font-size:15px;padding:13px 15px;min-height:50px;transition:border-color .3s;outline:none;
+  font-family:var(--sans);font-size:14px;padding:11px 13px;min-height:44px;transition:border-color .3s;outline:none;width:100%;
 }
 .field input:focus,.field select:focus{border-color:var(--gold)}
 .field input::-webkit-calendar-picker-indicator{filter:invert(.8) sepia(.5) saturate(2);cursor:pointer}
-.dst-opt{
-  display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);letter-spacing:.05em;
-  background:rgba(5,9,20,.6);border:1px solid var(--line-soft);border-radius:2px;
-  padding:0 16px;min-height:50px;cursor:pointer;
+.dst-opt{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--muted);letter-spacing:.05em;background:rgba(5,9,20,.6);border:1px solid var(--line-soft);border-radius:2px;padding:0 13px;min-height:44px;cursor:pointer;flex:1;min-width:150px}
+.dst-opt input{accent-color:var(--gold);width:15px;height:15px;cursor:pointer}
+.go-btn{
+  padding:13px 30px;background:linear-gradient(135deg,var(--gold-soft),var(--gold) 60%,#B98C45);
+  color:#171003;font-weight:500;font-size:14.5px;letter-spacing:.16em;border-radius:2px;min-height:44px;
+  transition:all .35s;box-shadow:0 8px 24px rgba(217,179,107,.22);white-space:nowrap;
 }
-.dst-opt input{accent-color:var(--gold);width:16px;height:16px;cursor:pointer}
-.chart-submit{
-  padding:15px 40px;background:linear-gradient(135deg,var(--gold-soft),var(--gold) 60%,#B98C45);
-  color:#171003;font-weight:500;font-size:15px;letter-spacing:.18em;border-radius:2px;min-height:50px;
-  transition:all .35s;box-shadow:0 10px 30px rgba(217,179,107,.25);
-}
-.chart-submit:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(217,179,107,.4)}
-.chart-result{display:none;margin-top:46px;border-top:1px dashed var(--line-soft);padding-top:46px}
-.chart-result.show{display:block;animation:rise .6s ease both}
-@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-.pos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.pos-card{background:rgba(5,9,20,.42);border:1px solid var(--line-soft);border-radius:4px;padding:28px 24px;text-align:center;transition:border-color .35s,transform .35s}
-.pos-card:hover{border-color:var(--line);transform:translateY(-4px)}
-.pos-card .glyph{font-size:40px;color:var(--gold-soft);line-height:1;margin-bottom:12px;display:block}
-.pos-card .en{font-family:var(--display);font-size:11px;letter-spacing:.3em;color:var(--gold-dim);margin-bottom:6px}
-.pos-card b{font-family:var(--serif);font-weight:700;font-size:22px;color:#F4F1E8;display:block;letter-spacing:.05em}
-.pos-card .deg{font-size:13px;color:var(--muted);margin-top:6px}
-.elem-wrap{margin-top:40px}
-.elem-wrap h3{font-family:var(--serif);font-size:16px;letter-spacing:.14em;color:var(--gold);margin-bottom:18px;font-weight:600}
-.elem-bars{display:flex;flex-direction:column;gap:14px}
-.elem-row{display:grid;grid-template-columns:56px 1fr 44px;align-items:center;gap:14px;font-size:13.5px}
-.elem-row .nm{color:var(--muted);letter-spacing:.2em}
-.elem-row .bar{height:8px;background:rgba(5,9,20,.6);border-radius:20px;overflow:hidden;position:relative}
-.elem-row .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:20px;width:0;transition:width 1s cubic-bezier(.2,.7,.2,1)}
-.elem-row .val{color:var(--gold-soft);font-family:var(--display);text-align:right}
-.wheel-zone{margin-top:44px;display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center}
-.wheel-wrap{width:min(340px,86vw);aspect-ratio:1;margin:0 auto;position:relative}
-.wheel-wrap::before{content:"";position:absolute;inset:-8%;z-index:-1;background:radial-gradient(closest-side,rgba(217,179,107,.13),transparent 70%)}
-.wheel-wrap svg{width:100%;height:100%;overflow:visible}
-.w-spin{transform-origin:160px 160px;animation:wspin 90s linear infinite}
-.w-rev{transform-origin:160px 160px;animation:wrev 90s linear infinite}
-@keyframes wspin{to{transform:rotate(360deg)}}
-@keyframes wrev{to{transform:rotate(-360deg)}}
-.wheel-legend h3{font-family:var(--serif);font-size:16px;letter-spacing:.14em;color:var(--gold);margin-bottom:16px;font-weight:600}
-.wheel-legend li{list-style:none;display:flex;align-items:center;gap:14px;font-size:14.5px;color:var(--muted);margin-bottom:12px}
-.wheel-legend .sym{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold-soft);font-size:17px;flex-shrink:0}
-.wheel-legend b{color:var(--gold-soft);font-weight:500}
-.wheel-legend .note{font-size:12px;color:var(--gold-dim);letter-spacing:.06em;margin-top:18px;line-height:1.9}
-.chart-note{
-  margin-top:30px;display:flex;gap:12px;align-items:flex-start;
-  font-size:12.5px;color:var(--gold-dim);letter-spacing:.06em;line-height:1.9;
-  background:rgba(5,9,20,.42);border:1px solid var(--line-soft);border-radius:4px;padding:16px 20px;
-}
-.chart-note svg{width:15px;height:15px;flex-shrink:0;margin-top:4px}
-footer{position:relative;z-index:2;border-top:1px solid var(--line-soft);background:rgba(5,9,20,.7);padding:44px 0 40px;margin-top:60px}
-.foot-row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
-.foot-row .copy{font-size:12px;color:var(--gold-dim);letter-spacing:.08em}
-.foot-row nav{display:flex;gap:26px;flex-wrap:wrap}
-.foot-row nav a{font-size:12.5px;color:var(--muted);letter-spacing:.12em;transition:color .3s}
-.foot-row nav a:hover{color:var(--gold-soft)}
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.go-btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(217,179,107,.38)}
+.go-btn.ghost{background:transparent;border:1px solid var(--line);color:var(--gold-soft);box-shadow:none}
+.go-btn.ghost:hover{background:rgba(217,179,107,.1)}
+.mini-btn{padding:9px 16px;font-size:12.5px;letter-spacing:.1em;border:1px solid var(--line);color:var(--gold-soft);border-radius:2px;transition:all .3s;white-space:nowrap}
+.mini-btn:hover{background:rgba(217,179,107,.12)}
+.mini-btn.danger{color:#D98B8B;border-color:rgba(217,139,139,.3)}
+.mini-btn.danger:hover{background:rgba(217,139,139,.1)}
+
+/* 客户档案 */
+.clients{background:var(--card);border:1px solid var(--line-soft);border-radius:8px;padding:24px 22px;position:relative;overflow:hidden}
+.clients h4{font-family:var(--serif);font-size:14px;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:16px}
+.client-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--line-soft)}
+.client-item:last-child{border-bottom:none}
+.client-item .nm{font-size:14px;color:var(--text);letter-spacing:.04em}
+.client-item .sub{font-size:11.5px;color:var(--gold-dim);margin-top:2px}
+.client-empty{font-size:12.5px;color:var(--muted);line-height:2;padding:8px 0}
+
+/* 结果区 */
+.result{margin-top:26px}
+.res-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.res-head h3{font-family:var(--serif);font-size:19px;letter-spacing:.1em;color:#F4F1E8;font-weight:700}
+.res-head .tag{font-size:12px;color:var(--gold-dim);letter-spacing:.12em}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:860px){.grid-2{grid-template-columns:1fr}}
+.planets-table{background:var(--card);border:1px solid var(--line-soft);border-radius:8px;overflow:hidden}
+.planets-table table{width:100%;border-collapse:collapse;font-size:13.5px}
+.planets-table th{font-size:12px;color:var(--gold-dim);letter-spacing:.16em;font-weight:400;text-align:left;padding:13px 16px;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+.planets-table td{padding:12px 16px;border-bottom:1px solid rgba(199,211,234,.07);color:var(--muted)}
+.planets-table tr:last-child td{border-bottom:none}
+.planets-table td.glyph{font-size:20px;color:var(--gold-soft);text-align:center;width:44px}
+.planets-table td b{color:#F4F1E8;font-weight:500}
+.planets-table .ret{color:#D98B8B;font-size:11px;letter-spacing:.06em}
+.stat-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+@media(max-width:640px){.stat-cards{grid-template-columns:1fr 1fr}}
+.stat-card{background:var(--card);border:1px solid var(--line-soft);border-radius:6px;padding:16px 14px;text-align:center}
+.stat-card .k{font-size:11.5px;color:var(--gold-dim);letter-spacing:.2em}
+.stat-card .v{font-family:var(--display);font-size:24px;color:var(--gold-soft);margin-top:4px}
+.stat-card .s{font-size:11px;color:var(--muted);margin-top:2px}
+.bars{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.bar-row{display:grid;grid-template-columns:52px 1fr 40px;align-items:center;gap:12px;font-size:13px}
+.bar-row .nm{color:var(--muted);letter-spacing:.18em}
+.bar-row .bar{height:7px;background:rgba(5,9,20,.6);border-radius:20px;overflow:hidden}
+.bar-row .bar i{display:block;height:100%;width:0;border-radius:20px;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+.bar-row .val{color:var(--gold-soft);font-family:var(--display);text-align:right}
+.insight{background:linear-gradient(135deg,rgba(217,179,107,.09),rgba(217,179,107,.02));border:1px solid var(--line);border-radius:8px;padding:22px 24px;margin-bottom:18px}
+.insight h4{font-family:var(--serif);font-size:15px;letter-spacing:.14em;color:var(--gold);font-weight:600;margin-bottom:10px}
+.insight p{font-size:14px;color:var(--text);line-height:2}
+.insight .tri{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.insight .tri span{font-size:12px;color:var(--muted);border:1px solid var(--line-soft);border-radius:20px;padding:4px 14px;letter-spacing:.08em}
+.aspect-list{background:var(--card);border:1px solid var(--line-soft);border-radius:8px;padding:6px 22px 18px}
+.aspect-list h4{font-family:var(--serif);font-size:15px;letter-spacing:.14em;color:var(--gold);font-weight:600;margin:16px 0 6px}
+.asi{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed rgba(199,211,234,.09);font-size:13.5px}
+.asi:last-child{border-bottom:none}
+.asi .ic{font-size:16px;color:var(--gold-soft);min-width:30px;text-align:center;margin-top:1px}
+.asi b{color:#F4F1E8;font-weight:500}
+.asi .wl{color:var(--muted)}
+.asi .ex{color:var(--muted);font-size:12.5px;line-height:1.9}
+.wheel-zone{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:26px;align-items:center;margin-top:6px}
+@media(max-width:860px){.wheel-zone{grid-template-columns:1fr}}
+.wheel-wrap{width:min(360px,86vw);aspect-ratio:1;margin:0 auto;position:relative}
+.wheel-wrap::before{content:"";position:absolute;inset:-7%;z-index:-1;background:radial-gradient(closest-side,rgba(217,179,107,.13),transparent 70%)}
+.wheel-wrap svg{width:100%;height:100%;overflow:visible;display:block}
+.legend-box h4{font-family:var(--serif);font-size:14px;letter-spacing:.14em;color:var(--gold);font-weight:600;margin-bottom:12px}
+.legend-box li{list-style:none;display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--muted);margin-bottom:9px}
+.legend-box .sym{width:32px;height:32px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold-soft);font-size:16px;flex-shrink:0;background:rgba(5,9,20,.5)}
+.legend-box b{color:var(--gold-soft);font-weight:500}
+.legend-box .note{font-size:11.5px;color:var(--gold-dim);letter-spacing:.06em;margin-top:12px;line-height:1.9}
+.pos-list{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+.pos-row{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line-soft);border-radius:6px;padding:12px 16px;font-size:13.5px}
+.pos-row .gl{font-size:19px;color:var(--gold-soft);min-width:30px;text-align:center}
+.pos-row b{color:#F4F1E8;font-weight:500}
+.pos-row .sg{color:var(--muted)}
+.pos-row .ln{color:var(--muted);font-size:12.5px;margin-top:2px;line-height:1.8}
+.chart-note{margin-top:24px;font-size:12px;color:var(--gold-dim);letter-spacing:.06em;line-height:1.9;background:rgba(5,9,20,.42);border:1px solid var(--line-soft);border-radius:4px;padding:14px 18px}
+.hint{font-size:12px;color:var(--gold-dim);margin-top:10px;letter-spacing:.04em}
+
+/* 底部 */
+footer{border-top:1px solid var(--line-soft);padding:56px 0 110px;position:relative;z-index:2;margin-top:30px}
+footer .k-logo-foot{width:200px;height:56px;margin:0 auto 18px}
+footer .links{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-bottom:14px}
+footer .links a{font-size:13px;color:var(--muted);letter-spacing:.14em;transition:color .3s}
+footer .links a:hover{color:var(--gold-soft)}
+footer .copy{text-align:center;font-size:12px;color:var(--gold-dim);letter-spacing:.08em}
+footer .copy b{color:var(--gold-soft);font-weight:500}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .reveal.in{opacity:1;transform:none}
-@media (max-width:860px){
-  .pos-grid{grid-template-columns:1fr}
-  .wheel-zone{grid-template-columns:1fr}
-  .chart-panel{padding:36px 24px}
-}
-@media (max-width:720px){
-  .nav-back .hide-m{display:none}
-  section{padding:56px 0}
-  .page-head{padding-top:130px}
-}
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
-  .reveal{opacity:1;transform:none}
-}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-
-<!-- ============ Kingsley Logo 符号定义 ============ -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="kGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#8A7144"/>
-      <stop offset=".5" stop-color="#EFD9A7"/>
-      <stop offset="1" stop-color="#B98C45"/>
-      <animate attributeName="x1" values="-0.3;1.3;-0.3" dur="5s" repeatCount="indefinite"/>
-    </linearGradient>
-    <symbol id="k-logo" viewBox="0 0 340 96">
-      <circle cx="64" cy="48" r="34" fill="none" stroke="rgba(217,179,107,.55)" stroke-width="1"/>
-      <g class="k-dash">
-        <circle cx="64" cy="48" r="27.5" fill="none" stroke="rgba(217,179,107,.32)" stroke-width=".7" stroke-dasharray="2 5"/>
-        <circle cx="95" cy="48" r="1.6" fill="#D9B36B" opacity=".8"/>
-        <circle cx="33" cy="48" r="1.4" fill="#D9B36B" opacity=".7"/>
-        <circle cx="64" cy="20.5" r="1.5" fill="#EFD9A7" opacity=".75"/>
-        <circle cx="64" cy="75.5" r="1.3" fill="#C7D3EA" opacity=".7"/>
-        <circle cx="82" cy="29" r="1.2" fill="#D9B36B" opacity=".65"/>
-        <circle cx="46" cy="67" r="1.2" fill="#D9B36B" opacity=".65"/>
-      </g>
-      <path class="k-core" d="M64 24 C66 40, 72 46, 88 48 C72 50, 66 56, 64 72 C62 56, 56 50, 40 48 C56 46, 62 40, 64 24 Z" fill="#EFD9A7"/>
-      <path class="k-moon" d="M76 34 a13 13 0 1 0 0 28 a10 10 0 1 1 0 -28z" fill="none" stroke="#C7D3EA" stroke-width="1.3"/>
-      <path class="k-spark" d="M30 16.5 C30 20.1, 33.4 24, 37.5 24 C33.4 24, 30 27.9, 30 31.5 C30 27.9, 26.6 24, 22.5 24 C26.6 24, 30 20.1, 30 16.5 Z" fill="#EFD9A7"/>
-      <path class="k-spark k-s2" d="M99 16 C99 19.3, 101.7 22, 105 22 C101.7 22, 99 24.7, 99 28 C99 24.7, 96.3 22, 93 22 C96.3 22, 99 19.3, 99 16 Z" fill="#C7D3EA"/>
-      <path class="k-spark k-s3" d="M30 64 C30 67.3, 32.7 70, 36 70 C32.7 70, 30 72.7, 30 76 C30 72.7, 27.3 70, 24 70 C27.3 70, 30 67.3, 30 64 Z" fill="#D9B36B"/>
-      <text class="k-name" x="118" y="58" fill="url(#kGrad)">Kingsley</text>
-      <text class="k-sub" x="120" y="79" fill="rgba(217,179,107,.6)">CELESTIAL ORACLE</text>
-    </symbol>
-  </defs>
-</svg>
-
-<canvas id="sky" aria-hidden="true"></canvas>
-<div class="sky-tint" aria-hidden="true"></div>
+<canvas id="sky"></canvas>
+<div class="sky-tint"></div>
 
 <header id="header">
-  <nav class="nav" aria-label="主导航">
-    <a class="brand" href="index.html">
-      <svg class="k-logo k-logo-sm" aria-label="Kingsley 星语占星馆"><use href="#k-logo"/></svg>
-      <span class="zh">星语<span class="g">占星馆</span></span>
+  <nav class="nav">
+    <a class="brand" href="index.html" aria-label="星语占星馆首页">
+      <svg class="k-logo k-logo-sm" viewBox="0 0 340 96" role="img" aria-label="Kingsley 星语占星馆"><use href="#k-logo"/></svg>
     </a>
     <ul class="nav-back">
-      <li class="hide-m"><a href="index.html#sky-sec">今日星象</a></li>
-      <li class="hide-m"><a href="index.html#services">服务</a></li>
-      <li class="hide-m"><a href="index.html#voices">见证</a></li>
-      <li><a href="index.html#contact">预约咨询</a></li>
+      <li><a href="index.html">首页</a></li>
+      <li><a href="index.html#today">今日星象</a></li>
+      <li><a href="services.html">服务</a></li>
+      <li><a href="chart.html" style="color:var(--gold-soft)">星图工具</a></li>
     </ul>
-    <a class="nav-cta" href="index.html#contact">预约咨询</a>
+    <a class="nav-cta" href="services.html#booking">预约解读</a>
   </nav>
 </header>
 
-<!-- ============ 星图查询工具 ============ -->
-<main>
-  <section class="page-head" id="top">
-    <div class="wrap">
-      <div class="en reveal">CHART TOOL · 星图查询</div>
-      <h1 class="reveal">输入生辰，<span class="accent">解锁你的三主星</span></h1>
-      <p class="reveal d1">太阳星座是你的人格名片，月亮星座映照内在情绪，上升星座是别人眼中的你。连同四元素分布与简化星盘，一次看全。</p>
+<section class="page-head">
+  <div class="wrap">
+    <p class="en">ASTROLOGER WORKBENCH</p>
+    <h1>星象师<span class="accent">工作台</span></h1>
+    <p>全行星排盘 · 宫位相位 · 专业星盘 · 双人合盘 · 行运过境 · 客户档案。算法基于 VSOP87 高精度星历（行星误差 0.001° 级），一次计算，终身可查。</p>
+  </div>
+</section>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="k-logo" viewBox="0 0 340 96">
+    <g class="k-dash">
+      <circle cx="170" cy="48" r="40" fill="none" stroke="#D9B36B" stroke-width="1.2" stroke-dasharray="2 4"/>
+    </g>
+    <g class="k-core">
+      <path d="M170 16c3 18 12 27 30 30-18 3-27 12-30 30-3-18-12-27-30-30 18-3 27-12 30-30z" fill="#EFD9A7"/>
+      <circle cx="170" cy="46" r="12" fill="none" stroke="#0A1226" stroke-width="1.6"/>
+    </g>
+    <g class="k-moon">
+      <path d="M162 40c4 1 7 4 7 9s-3 8-7 9c4-1 6-4 6-9s-2-8-6-9z" fill="#0A1226"/>
+    </g>
+    <g fill="#D9B36B">
+      <path class="k-spark" d="M196 22l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+      <path class="k-spark k-s2" d="M208 30l1.6 4.8 4.8 1.6-4.8 1.6-1.6 4.8-1.6-4.8-4.8-1.6 4.8-1.6z"/>
+      <path class="k-spark k-s3" d="M142 34l1.4 4.2 4.2 1.4-4.2 1.4-1.4 4.2-1.4-4.2-4.2-1.4 4.2-1.4z"/>
+    </g>
+    <text x="170" y="84" text-anchor="middle" class="k-name" fill="#F4F1E8">KINGSLEY</text>
+    <text x="170" y="94" text-anchor="middle" class="k-sub" fill="#D9B36B">CELESTIAL ORACLE</text>
+  </symbol>
+</svg>
+
+<section class="wb">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn on" data-tab="natal" role="tab" aria-selected="true">☉ 本命盘</button>
+      <button class="tab-btn" data-tab="synastry" role="tab" aria-selected="false">☍ 合盘 · 双人</button>
+      <button class="tab-btn" data-tab="transit" role="tab" aria-selected="false">↻ 行运 · 过境</button>
     </div>
-  </section>
 
-  <section>
-    <div class="wrap">
-      <div class="chart-panel reveal d1">
-        <form class="chart-form" id="chartForm">
-          <div class="field">
-            <label for="cDate">出生日期</label>
-            <input type="date" id="cDate" required>
+    <!-- ============ 本命盘 ============ -->
+    <div class="tab-panel on" id="panel-natal">
+      <div class="panel-inner">
+        <div>
+          <div class="form-card reveal">
+            <h4>出生信息</h4>
+            <div class="f-row">
+              <div class="field"><label>姓名 / 备注（可选）</label><input type="text" id="nName" placeholder="如：白安可"></div>
+              <div class="field"><label>出生日期</label><input type="date" id="nDate" required></div>
+              <div class="field"><label>出生时间</label><input type="time" id="nTime" value="12:00" required></div>
+            </div>
+            <div class="f-row">
+              <div class="field"><label>出生城市</label>
+                <select id="nCity">
+                  <option value="beijing">北京</option><option value="kunming">昆明</option>
+                  <option value="shanghai">上海</option><option value="guangzhou">广州</option>
+                  <option value="shenzhen">深圳</option><option value="chengdu">成都</option>
+                  <option value="chongqing">重庆</option><option value="hangzhou">杭州</option>
+                  <option value="xian">西安</option><option value="wuhan">武汉</option>
+                  <option value="nanjing">南京</option><option value="tianjin">天津</option>
+                  <option value="zhengzhou">郑州</option><option value="qingdao">青岛</option>
+                  <option value="dalian">大连</option><option value="xiamen">厦门</option>
+                  <option value="changsha">长沙</option><option value="shenyang">沈阳</option>
+                  <option value="haerbin">哈尔滨</option><option value="wulumuqi">乌鲁木齐</option>
+                  <option value="lasa">拉萨</option><option value="haikou">海口</option>
+                  <option value="hongkong">香港</option><option value="taibei">台北</option>
+                </select>
+              </div>
+              <label class="dst-opt"><input type="checkbox" id="nDst"> 夏令时（1986-1991 春夏季）</label>
+              <button class="go-btn" id="nGo">生成本命盘</button>
+            </div>
+            <p class="hint">默认北京时间。若出生地非中国，请手动换算为北京时间后填写。算法精度：行星 ±0.001°，月亮 ±0.1°。</p>
           </div>
-          <div class="field">
-            <label for="cTime">出生时间</label>
-            <input type="time" id="cTime" value="12:00">
-          </div>
-          <div class="field">
-            <label for="cCity">出生城市</label>
-            <select id="cCity"></select>
-          </div>
-          <label class="dst-opt" title="1986–1991 年中国实行夏时制，如出生证时间已含夏令时请勾选">
-            <input type="checkbox" id="cDst"> 夏令时
-          </label>
-          <button class="chart-submit" type="submit">揭开星图</button>
-        </form>
 
-        <div class="chart-result" id="chartResult"></div>
+          <div id="nResult" class="result" style="display:none"></div>
+        </div>
 
-        <p class="chart-note" style="margin-top:26px">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.4v.2"/></svg>
-          算法说明：本工具采用简化天文算法（误差约 ±1°），出生时间默认按标准时（UTC+8）计算；中国大陆 1986–1991 年实行夏时制，若出生证时间已含夏令时请勾选开关。结果用于自我探索与日常参考，精确排盘请以专业星历软件为准。
-        </p>
+        <aside class="clients reveal">
+          <h4>客户档案</h4>
+          <div id="clientList"></div>
+          <button class="mini-btn" id="saveClient" style="width:100%;margin-top:6px">＋ 将当前结果存入档案</button>
+          <p class="client-empty" id="clientEmpty">档案保存在本机浏览器（localStorage）。<br>生成本命盘后即可一键存档。</p>
+        </aside>
       </div>
     </div>
-  </section>
-</main>
 
-<!-- ============ 页脚 ============ -->
+    <!-- ============ 合盘 ============ -->
+    <div class="tab-panel" id="panel-synastry">
+      <div class="panel-inner solo">
+        <div>
+          <div class="form-card reveal">
+            <h4>双人合盘 · Synastry</h4>
+            <div class="f-row">
+              <div class="field"><label>TA / 甲方 出生日期</label><input type="date" id="sDate1" required></div>
+              <div class="field"><label>出生时间</label><input type="time" id="sTime1" value="12:00" required></div>
+              <div class="field"><label>出生城市</label>
+                <select id="sCity1"><option value="beijing">北京</option><option value="kunming">昆明</option><option value="shanghai">上海</option><option value="guangzhou">广州</option><option value="shenzhen">深圳</option><option value="chengdu">成都</option><option value="chongqing">重庆</option><option value="hangzhou">杭州</option><option value="xian">西安</option><option value="wuhan">武汉</option><option value="nanjing">南京</option><option value="tianjin">天津</option><option value="zhengzhou">郑州</option><option value="qingdao">青岛</option><option value="dalian">大连</option><option value="xiamen">厦门</option><option value="changsha">长沙</option><option value="shenyang">沈阳</option><option value="haerbin">哈尔滨</option><option value="wulumuqi">乌鲁木齐</option><option value="lasa">拉萨</option><option value="haikou">海口</option><option value="hongkong">香港</option><option value="taibei">台北</option></select>
+              </div>
+              <label class="dst-opt"><input type="checkbox" id="sDst1"> 夏令时</label>
+            </div>
+            <div class="f-row">
+              <div class="field"><label>我 / 乙方 出生日期</label><input type="date" id="sDate2" required></div>
+              <div class="field"><label>出生时间</label><input type="time" id="sTime2" value="12:00" required></div>
+              <div class="field"><label>出生城市</label>
+                <select id="sCity2"><option value="beijing">北京</option><option value="kunming" selected>昆明</option><option value="shanghai">上海</option><option value="guangzhou">广州</option><option value="shenzhen">深圳</option><option value="chengdu">成都</option><option value="chongqing">重庆</option><option value="hangzhou">杭州</option><option value="xian">西安</option><option value="wuhan">武汉</option><option value="nanjing">南京</option><option value="tianjin">天津</option><option value="zhengzhou">郑州</option><option value="qingdao">青岛</option><option value="dalian">大连</option><option value="xiamen">厦门</option><option value="changsha">长沙</option><option value="shenyang">沈阳</option><option value="haerbin">哈尔滨</option><option value="wulumuqi">乌鲁木齐</option><option value="lasa">拉萨</option><option value="haikou">海口</option><option value="hongkong">香港</option><option value="taibei">台北</option></select>
+              </div>
+              <label class="dst-opt"><input type="checkbox" id="sDst2"> 夏令时</label>
+              <button class="go-btn" id="sGo">排双人相位</button>
+            </div>
+          </div>
+          <div id="sResult" class="result" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ 行运 ============ -->
+    <div class="tab-panel" id="panel-transit">
+      <div class="panel-inner solo">
+        <div>
+          <div class="form-card reveal">
+            <h4>行运 · 过境 Transits</h4>
+            <div class="f-row">
+              <div class="field"><label>本命出生日期</label><input type="date" id="tDate" required></div>
+              <div class="field"><label>出生时间</label><input type="time" id="tTime" value="12:00" required></div>
+              <div class="field"><label>出生城市</label>
+                <select id="tCity"><option value="beijing">北京</option><option value="kunming" selected>昆明</option><option value="shanghai">上海</option><option value="guangzhou">广州</option><option value="shenzhen">深圳</option><option value="chengdu">成都</option><option value="chongqing">重庆</option><option value="hangzhou">杭州</option><option value="xian">西安</option><option value="wuhan">武汉</option><option value="nanjing">南京</option><option value="tianjin">天津</option><option value="zhengzhou">郑州</option><option value="qingdao">青岛</option><option value="dalian">大连</option><option value="xiamen">厦门</option><option value="changsha">长沙</option><option value="shenyang">沈阳</option><option value="haerbin">哈尔滨</option><option value="wulumuqi">乌鲁木齐</option><option value="lasa">拉萨</option><option value="haikou">海口</option><option value="hongkong">香港</option><option value="taibei">台北</option></select>
+              </div>
+              <label class="dst-opt"><input type="checkbox" id="tDst"> 夏令时</label>
+            </div>
+            <div class="f-row">
+              <div class="field"><label>行运时刻（北京时间）</label><input type="datetime-local" id="tWhen" required></div>
+              <div class="field"><label>&nbsp;</label><button class="go-btn" id="tGo">看行运相位</button></div>
+            </div>
+            <p class="hint">行运 = 此刻天空的行星，划过你本命盘的每一度。行运越快，影响力越短暂而直接；外行星行运则以季度、年为单位，标记人生章节。</p>
+          </div>
+          <div id="tResult" class="result" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
-  <div class="wrap foot-row">
-    <span class="copy">© 2026 Kingsley · 星语占星馆 · 星象咨询属传统文化与心理慰藉范畴，仅供参考</span>
-    <nav>
-      <a href="index.html">返回首页</a>
-      <a href="index.html#services">服务详情</a>
-      <a href="privacy.html">隐私政策</a>
+  <div class="wrap">
+    <svg class="k-logo k-logo-foot" viewBox="0 0 340 96" role="img" aria-label="Kingsley 星语占星馆"><use href="#k-logo"/></svg>
+    <nav class="links">
+      <a href="index.html">首页</a><a href="index.html#today">今日星象</a><a href="chart.html">星图工具</a>
+      <a href="services.html">服务</a><a href="privacy.html">隐私与合规</a>
     </nav>
+    <p class="copy">© 2026 <b>Kingsley · 星语占星馆</b> · 自我探索与心理占星 · 算法 VSOP87</p>
   </div>
 </footer>
 
+<script src="astro-vsop.js"></script>
+<script src="astro-pluto.js"></script>
+<script src="astro.js"></script>
+<script src="astro-words.js"></script>
 <script>
-(function(){
+(function () {
   'use strict';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ============ 轻量星空背景 ============ */
-  var canvas = document.getElementById('sky');
-  var ctx = canvas.getContext('2d');
+  /* ============ 星空背景 ============ */
+  var canvas = document.getElementById('sky'), ctx = canvas.getContext('2d');
   var W = 0, H = 0, stars = [];
   function resizeSky(){
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -268,9 +374,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-soft);backgro
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     stars = [];
     var count = Math.round(Math.min(240, W * H / 7000));
-    for (var i = 0; i < count; i++){
-      stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.4 + 0.4, a: 0.15 + Math.random() * 0.5, ph: Math.random() * Math.PI * 2, sp: 0.5 + Math.random() * 1.5 });
-    }
+    for (var i = 0; i < count; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.4 + 0.4, a: 0.15 + Math.random() * 0.5, ph: Math.random() * Math.PI * 2, sp: 0.5 + Math.random() * 1.5 });
   }
   function drawSky(t){
     ctx.clearRect(0, 0, W, H);
@@ -286,166 +390,449 @@ footer{position:relative;z-index:2;border-top:1px solid var(--line-soft);backgro
   function loop(t){ if (!reduced) drawSky(t); requestAnimationFrame(loop); }
   resizeSky(); window.addEventListener('resize', resizeSky);
   if (reduced) drawSky(0); else requestAnimationFrame(loop);
-
   var header = document.getElementById('header');
   window.addEventListener('scroll', function(){ header.classList.toggle('scrolled', window.pageYOffset > 40); }, {passive:true});
 
-  /* ============ 星图算法（低精度，误差约 ±1°） ============ */
-  var SIGNS = ["白羊","金牛","双子","巨蟹","狮子","处女","天秤","天蝎","射手","摩羯","水瓶","双鱼"];
-  var SIGNS_EN = ["Aries","Taurus","Gemini","Cancer","Leo","Virgo","Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"];
-  var ELEM  = ["火","土","风","水","火","土","风","水","火","土","风","水"];
+  var A = globalThis.Astro, W = globalThis.AstroWords;
+  var SIGNS = A.SIGNS, PLANET_GLYPH = A.PLANET_GLYPH;
+  var PLANET_CN = { sun:'太阳', moon:'月亮', mercury:'水星', venus:'金星', mars:'火星',
+    jupiter:'木星', saturn:'土星', uranus:'天王星', neptune:'海王星', pluto:'冥王星' };
+  var FAST = ['sun','moon','mercury','venus','mars'];
   var CITIES = {
-    "北京":[39.9042,116.4074], "上海":[31.2304,121.4737], "广州":[23.1291,113.2644],
-    "深圳":[22.5431,114.0579], "昆明":[24.8801,102.8329], "成都":[30.5728,104.0668],
-    "重庆":[29.5630,106.5516], "杭州":[30.2741,120.1551], "西安":[34.3416,108.9398],
-    "武汉":[30.5928,114.3055], "南京":[32.0603,118.7969], "天津":[39.0842,117.2009],
-    "郑州":[34.7466,113.6253], "青岛":[36.0671,120.3826], "大连":[38.9140,121.6147],
-    "厦门":[24.4798,118.0894], "长沙":[28.2282,112.9388], "沈阳":[41.8057,123.4315],
-    "哈尔滨":[45.8038,126.5349], "乌鲁木齐":[43.8256,87.6168], "拉萨":[29.6450,91.1409],
-    "海口":[20.0440,110.1999], "香港":[22.3193,114.1694], "台北":[25.0330,121.5654]
+    beijing:[39.9042,116.4074], kunming:[24.8801,102.8329], shanghai:[31.2304,121.4737],
+    guangzhou:[23.1291,113.2644], shenzhen:[22.5431,114.0579], chengdu:[30.5728,104.0668],
+    chongqing:[29.5630,106.5516], hangzhou:[30.2741,120.1551], xian:[34.3416,108.9398],
+    wuhan:[30.5928,114.3055], nanjing:[32.0603,118.7969], tianjin:[39.0842,117.2009],
+    zhengzhou:[34.7466,113.6253], qingdao:[36.0671,120.3826], dalian:[38.9140,121.6147],
+    xiamen:[24.4798,118.0894], changsha:[28.2282,112.9388], shenyang:[41.8057,123.4315],
+    haerbin:[45.8038,126.5349], wulumuqi:[43.8256,87.6168], lasa:[29.6450,91.1409],
+    haikou:[20.0440,110.1999], hongkong:[22.3193,114.1694], taibei:[25.0330,121.5654]
   };
-  function norm360(d){ d = d % 360; return d < 0 ? d + 360 : d; }
-  /* 儒略日：h/min 为出生地钟表时间（中国大陆统一 UTC+8），内部转换为世界时并处理跨天 */
-  function julianDay(y, m, d, h, min){
-    var ut = h + min / 60 - 8;
-    if (ut < 0){ ut += 24; d -= 1; }
-    var dt = new Date(Date.UTC(y, m - 1, d));
-    var uy = dt.getUTCFullYear(), um = dt.getUTCMonth() + 1, ud = dt.getUTCDate();
-    if (um <= 2){ uy -= 1; um += 12; }
-    return 367*uy - Math.floor(7*(uy + Math.floor((um+9)/12))/4) + Math.floor(275*um/9) + ud + 1721013.5 + ut/24;
+  function cityName(k){ var m = {beijing:'北京',kunming:'昆明',shanghai:'上海',guangzhou:'广州',shenzhen:'深圳',chengdu:'成都',chongqing:'重庆',hangzhou:'杭州',xian:'西安',wuhan:'武汉',nanjing:'南京',tianjin:'天津',zhengzhou:'郑州',qingdao:'青岛',dalian:'大连',xiamen:'厦门',changsha:'长沙',shenyang:'沈阳',haerbin:'哈尔滨',wulumuqi:'乌鲁木齐',lasa:'拉萨',haikou:'海口',hongkong:'香港',taibei:'台北'}; return m[k]||k; }
+
+  /* ============ 计算核心 ============ */
+  function parseInput(dateStr, timeStr, dst) {
+    if (!dateStr) return null;
+    var dp = dateStr.split('-').map(Number);
+    var tp = (timeStr || '12:00').split(':').map(Number);
+    var h = tp[0], min = tp[1] || 0;
+    if (dst) h -= 1;
+    return { y: dp[0], m: dp[1], d: dp[2], h: h, min: min };
   }
-  function sunLongitude(jd){
-    var n = jd - 2451545.0;
-    var L = 280.460 + 0.9856474 * n;
-    var g = (357.528 + 0.9856003 * n) * Math.PI / 180;
-    return norm360(L + 1.915 * Math.sin(g) + 0.020 * Math.sin(2*g));
+  function calcChart(dateStr, timeStr, cityKey, dst) {
+    var b = parseInput(dateStr, timeStr, dst);
+    if (!b) return null;
+    var lat = CITIES[cityKey][0], lon = CITIES[cityKey][1];
+    var jd = A.julianDay(b.y, b.m, b.d, b.h, b.min);
+    var pos = A.withRetrograde(jd);
+    var asc = A.ascendant(jd, lat, lon);
+    var mc = A.midheaven(jd, lon);
+    var cusps = A.houses(jd, lat, lon, 'equal').cusps;
+    var planets = {};
+    Object.keys(pos).forEach(function (k) {
+      planets[k] = {
+        lon: pos[k].lon, retro: pos[k].retro,
+        sign: A.signIndex(pos[k].lon), deg: A.degInSign(pos[k].lon),
+        house: A.houseOf(pos[k].lon, cusps)
+      };
+    });
+    return { jd: jd, lat: lat, lon: lon, asc: asc, mc: mc, cusps: cusps, planets: planets };
   }
-  function moonLongitude(jd){
-    var n = jd - 2451545.0, R = Math.PI/180;
-    var Lp = 218.316 + 13.176396 * n;
-    var D  = 297.850 + 12.190749 * n;
-    var M  = 357.529 +  0.9856003 * n;
-    var Mp = 134.963 + 13.064993 * n;
-    var F  = 93.272  + 13.229350 * n;
-    return norm360(Lp + 6.289*Math.sin(Mp*R) + 1.274*Math.sin((2*D-Mp)*R)
-      + 0.658*Math.sin(2*D*R) + 0.214*Math.sin(2*Mp*R) - 0.114*Math.sin(F*R) + 0.058*Math.sin((2*D-2*Mp)*R));
-  }
-  function ascendant(jd, lat, lon){
-    var T = (jd - 2451545.0) / 36525;
-    var gmst = norm360(280.46061837 + 360.98564736629*(jd - 2451545.0) + 0.000387933*T*T - T*T*T/38710000);
-    var ramc = norm360(gmst + lon);
-    var eps = 23.4392911 - 0.0130042 * T;
-    var R = Math.PI/180, l = ramc*R, b = lat*R, e = eps*R;
-    var asc = Math.atan2(Math.cos(l), -(Math.sin(l)*Math.cos(e) + Math.tan(b)*Math.sin(e)));
-    return norm360(asc / R);
-  }
-  function computeChart(y, m, d, h, min, city){
-    var coords = CITIES[city];
-    var jd = julianDay(y, m, d, h, min);
-    var sun = sunLongitude(jd), moon = moonLongitude(jd), asc = ascendant(jd, coords[0], coords[1]);
-    var el = [0,0,0,0], names = ['火','土','风','水'];
-    [sun, moon, asc].forEach(function(lon){ el[names.indexOf(ELEM[Math.floor(lon/30)])]++; });
-    return { sun: sun, moon: moon, asc: asc, elements: el };
-  }
-  function wheelSVG(r){
-    var R = 150, cx = 160, cy = 160;
-    var ascDeg = Math.floor(r.asc/30)*30 + Math.floor(r.asc%30);
-    var wedges = '', glyphs = '';
-    for (var i = 0; i < 12; i++){
-      var a0 = (i*30 - 90)*Math.PI/180, a1 = ((i+1)*30 - 90)*Math.PI/180;
-      wedges += '<path d="M' + cx + ' ' + cy + ' L' + (cx + R*Math.cos(a0)).toFixed(2) + ' ' + (cy + R*Math.sin(a0)).toFixed(2) +
-        ' A' + R + ' ' + R + ' 0 0 1 ' + (cx + R*Math.cos(a1)).toFixed(2) + ' ' + (cy + R*Math.sin(a1)).toFixed(2) + ' Z" ' +
-        'fill="' + (i % 2 ? 'rgba(217,179,107,.06)' : 'rgba(199,211,234,.04)') + '" stroke="rgba(217,179,107,.3)" stroke-width="1"/>';
+
+  /* ============ 专业星盘 SVG（等宫制） ============ */
+  function wheelSVG(r) {
+    var S = 420, C = S / 2, R = 190, g = [];
+    var i, k;
+    function polar(deg, rad) {
+      var a = (deg - 90) * Math.PI / 180;
+      return [C + rad * Math.cos(a), C + rad * Math.sin(a)];
     }
-    [['☉', r.sun], ['☾', r.moon], ['↑', r.asc]].forEach(function(b){
-      var rel = norm360(b[1] - ascDeg);
-      var a = (rel - 90)*Math.PI/180;
-      glyphs += '<text x="' + (cx + R*0.66*Math.cos(a)).toFixed(1) + '" y="' + (cy + R*0.66*Math.sin(a)).toFixed(1) +
-        '" text-anchor="middle" dominant-baseline="central" font-size="17" fill="#EFD9A7">' + b[0] + '</text>';
-    });
-    return '<div class="wheel-wrap"><svg viewBox="0 0 320 320" role="img" aria-label="简化星盘">' +
-      '<g class="w-spin">' + wedges + '</g><g class="w-rev">' + glyphs + '</g></svg></div>';
+    function pt(deg, rad) { var p = polar(deg, rad); return p[0].toFixed(1) + ',' + p[1].toFixed(1); }
+    g.push('<svg viewBox="0 0 ' + S + ' ' + S + '" role="img" aria-label="专业星盘">');
+    // 外环装饰
+    g.push('<circle cx="' + C + '" cy="' + C + '" r="' + (R + 18) + '" fill="rgba(5,9,20,.35)" stroke="rgba(217,179,107,.5)" stroke-width="1"/>');
+    // 星座环：每 30° 一格
+    for (i = 0; i < 12; i++) {
+      var a0 = i * 30, a1 = a0 + 30;
+      var p0 = polar(a0, R), p1 = polar(a1, R);
+      var mid = polar(a0 + 15, R - 17);
+      var el = W.SIGNS[i].el;
+      var col = el === '火' ? '#E0654A' : el === '土' ? '#C9A45C' : el === '风' ? '#8FB4E8' : '#6FA8C9';
+      g.push('<path d="M' + pt(a0, R) + ' A' + R + ',' + R + ' 0 0 1 ' + pt(a1, R) + ' L' + pt(a1, R - 34) + ' A' + (R - 34) + ',' + (R - 34) + ' 0 0 0 ' + pt(a0, R - 34) + ' Z" fill="' + col + '" opacity="0.10"/>');
+      g.push('<path d="M' + pt(a0, R) + ' A' + R + ',' + R + ' 0 0 1 ' + pt(a1, R) + ' L' + pt(a1, R - 34) + ' A' + (R - 34) + ',' + (R - 34) + ' 0 0 0 ' + pt(a0, R - 34) + ' Z" fill="none" stroke="rgba(199,211,234,.14)" stroke-width="0.8"/>');
+      g.push('<text x="' + mid[0].toFixed(1) + '" y="' + mid[1].toFixed(1) + '" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="' + col + '" style="font-family:\'Cinzel\',serif">' + W.SIGNS[i].en.toUpperCase() + '</text>');
+    }
+    // 宫位刻度（等宫制 cusps）
+    var cusps = r.cusps;
+    for (i = 0; i < 12; i++) {
+      var ca = cusps[i], cb = cusps[(i + 1) % 12];
+      var pa = polar(ca, R - 36), pb = polar(cb, R - 36);
+      var m2 = polar((ca + 15), R - 50);
+      g.push('<path d="M' + pt(ca, R - 34) + ' L' + pt(ca, R - 8) + '" stroke="rgba(199,211,234,.3)" stroke-width="0.8"/>');
+      g.push('<path d="M' + pa[0].toFixed(1) + ',' + pa[1].toFixed(1) + ' A' + (R - 36) + ',' + (R - 36) + ' 0 0 1 ' + pb[0].toFixed(1) + ',' + pb[1].toFixed(1) + '" fill="none" stroke="rgba(217,179,107,.22)" stroke-width="1"/>');
+      g.push('<text x="' + m2[0].toFixed(1) + '" y="' + m2[1].toFixed(1) + '" text-anchor="middle" dominant-baseline="middle" font-size="13" fill="rgba(233,238,248,.55)">' + (i + 1) + '</text>');
+    }
+    // 行星（按黄经定位）
+    var keys = ['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto'];
+    for (k = 0; k < keys.length; k++) {
+      var pk = keys[k], pl = r.planets[pk];
+      var ang = pl.lon;
+      var pp = polar(ang, R - 68);
+      var retroMark = pl.retro ? '<tspan fill="#D98B8B" font-size="9">℞</tspan>' : '';
+      g.push('<g><text x="' + pp[0].toFixed(1) + '" y="' + pp[1].toFixed(1) + '" text-anchor="middle" dominant-baseline="middle" font-size="17" fill="#EFD9A7" style="font-family:serif">' + PLANET_GLYPH[pk] + retroMark + '</text></g>');
+    }
+    // 上升 / 天顶
+    var ascP = polar(r.asc, R - 8), mcP = polar(r.mc, R - 8);
+    g.push('<path d="M' + pt(r.asc, R - 6) + ' L' + pt(r.asc, R + 14) + '" stroke="#EFD9A7" stroke-width="1.6"/>');
+    g.push('<path d="M' + pt(r.mc, R - 6) + ' L' + pt(r.mc, R + 14) + '" stroke="#8FB4E8" stroke-width="1.2"/>');
+    g.push('<text x="' + ascP[0].toFixed(1) + '" y="' + (ascP[1] - 14).toFixed(1) + '" text-anchor="middle" font-size="11" fill="#EFD9A7" style="font-family:\'Cinzel\',serif">ASC</text>');
+    g.push('<text x="' + mcP[0].toFixed(1) + '" y="' + (mcP[1] - 14).toFixed(1) + '" text-anchor="middle" font-size="11" fill="#8FB4E8" style="font-family:\'Cinzel\',serif">MC</text>');
+    // 中轴虚线
+    g.push('<path d="M' + pt(r.asc, 0) + ' L' + pt(r.asc + 180, 0) + '" stroke="rgba(199,211,234,.12)" stroke-width="0.6"/>');
+    g.push('<path d="M' + pt(r.mc, 0) + ' L' + pt(r.mc + 180, 0) + '" stroke="rgba(199,211,234,.12)" stroke-width="0.6"/>');
+    g.push('</svg>');
+    return g.join('');
   }
 
-  /* ============ 渲染 ============ */
-  (function(){
-    var citySel = document.getElementById('cCity');
-    var opts = '';
-    Object.keys(CITIES).forEach(function(c){ opts += '<option value="' + c + '">' + c + '</option>'; });
-    citySel.innerHTML = opts;
-    var detectCity = '';
-    try {
-      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      if (/Shanghai|Chongqing|Urumqi|Hong_Kong|Taipei|Macau/.test(tz)) detectCity = '北京';
-    } catch(e){}
-    if (detectCity && CITIES[detectCity]) citySel.value = detectCity;
-  })();
+  /* ============ 元素 / 模式统计 ============ */
+  function tally(planets, keyFn) {
+    var t = {}, i, keys = ['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto'];
+    for (i = 0; i < keys.length; i++) t[keyFn(planets[keys[i]])] = (t[keyFn(planets[keys[i]])] || 0) + 1;
+    return t;
+  }
+  function statBars(count, labels, colors) {
+    var total = 0, i, h = '';
+    for (i = 0; i < labels.length; i++) total += (count[labels[i]] || 0);
+    for (i = 0; i < labels.length; i++) {
+      var v = count[labels[i]] || 0, pct = total ? Math.round(v / total * 100) : 0;
+      h += '<div class="bar-row"><span class="nm">' + labels[i] + '</span><span class="bar"><i style="background:' + colors[i] + '" data-w="' + pct + '%"></i></span><span class="val">' + v + '</span></div>';
+    }
+    return h;
+  }
 
-  var form = document.getElementById('chartForm');
-  var res = document.getElementById('chartResult');
-  var EL_COLORS = { '火':'var(--fire)', '土':'var(--earth)', '风':'var(--air)', '水':'var(--water)' };
+  /* ============ 相位计算（本命盘内） ============ */
+  function natalAspects(chart) {
+    var out = [], keys = Object.keys(chart.planets), i, j;
+    for (i = 0; i < keys.length; i++) {
+      for (j = i + 1; j < keys.length; j++) {
+        var a = keys[i], b = keys[j];
+        var asp = W.aspectsBetween(chart.planets[a].lon, chart.planets[b].lon, a + '|' + b);
+        asp.forEach(function (x) {
+          out.push({ a: a, b: b, n: x.n, deg: x.deg, actual: x.actual, orb: x.orb, el: x.el });
+        });
+      }
+    }
+    out.sort(function (x, y) { return x.actual - y.actual; });
+    return out;
+  }
 
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var dateVal = document.getElementById('cDate').value;
-    var timeVal = document.getElementById('cTime').value || '12:00';
-    var city = document.getElementById('cCity').value;
-    var dst = document.getElementById('cDst').checked;
-    if (!dateVal){ alert('请选择出生日期'); return; }
-    var p = dateVal.split('-');
-    var y = parseInt(p[0], 10), m = parseInt(p[1], 10), d = parseInt(p[2], 10);
-    var tp = timeVal.split(':');
-    var h = parseInt(tp[0], 10), min = parseInt(tp[1], 10) || 0;
-    if (dst) h -= 1; // 夏令时：钟表时间减 1 小时回到标准时
+  /* ============ 本命盘渲染 ============ */
+  function renderNatal(chart, name) {
+    var el = document.getElementById('nResult');
+    var keys = ['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto'];
+    var rows = '', i, k;
+    for (i = 0; i < keys.length; i++) {
+      k = keys[i];
+      var p = chart.planets[k];
+      var sg = W.SIGNS[p.sign];
+      rows += '<tr><td class="glyph">' + PLANET_GLYPH[k] + '</td><td><b>' + PLANET_CN[k] + '</b></td>' +
+        '<td><b>' + sg.n + '座</b> ' + p.deg + '°</td>' +
+        '<td>' + p.house + '宫</td>' +
+        '<td>' + (p.retro ? '<span class="ret">逆行 ℞</span>' : '顺行') + '</td></tr>';
+    }
+    var ascS = W.SIGNS[A.signIndex(chart.asc)];
+    var mcS = W.SIGNS[A.signIndex(chart.mc)];
+    rows += '<tr><td class="glyph">↑</td><td><b>上升</b></td><td><b>' + ascS.n + '座</b> ' + (chart.asc % 30 | 0) + '°</td><td>1宫起点</td><td>—</td></tr>';
+    rows += '<tr><td class="glyph">⚹</td><td><b>天顶 MC</b></td><td><b>' + mcS.n + '座</b> ' + (chart.mc % 30 | 0) + '°</td><td>事业轴</td><td>—</td></tr>';
 
-    var r = computeChart(y, m, d, h, min, city);
-    var sunAt = Math.floor(r.sun/30), moonAt = Math.floor(r.moon/30), ascAt = Math.floor(r.asc/30);
-    var sunD = Math.floor(r.sun%30), moonD = Math.floor(r.moon%30), ascD = Math.floor(r.asc%30);
+    var elCount = tally(chart.planets, function (p) { return W.SIGNS[p.sign].el; });
+    var mdCount = tally(chart.planets, function (p) { return W.SIGNS[p.sign].md; });
+    var elMax = ['火','土','风','水'].reduce(function (m, x) { return (elCount[x] || 0) > (elCount[m] || 0) ? x : m; }, '火');
+    var mdMax = ['开创','固定','变动'].reduce(function (m, x) { return (mdCount[x] || 0) > (mdCount[m] || 0) ? x : m; }, '开创');
+    var fireP = ['白羊','狮子','射手'], earthP = ['金牛','处女','摩羯'], airP = ['双子','天秤','水瓶'], waterP = ['巨蟹','天蝎','双鱼'];
+    var elBars = statBars(elCount, ['火','土','风','水'], ['#E0654A','#C9A45C','#8FB4E8','#6FA8C9']);
+    var mdBars = statBars(mdCount, ['开创','固定','变动'], ['#EFD9A7','#C7D3EA','#98A1C4']);
 
-    var elBars = '';
-    ['火','土','风','水'].forEach(function(el, i){
-      var pct = Math.round(r.elements[i] / 3 * 100);
-      var w = r.elements[i] === 0 ? 3 : Math.max(pct, 12);
-      elBars += '<div class="elem-row"><span class="nm">' + el + '元素</span>' +
-        '<span class="bar"><i style="background:' + EL_COLORS[el] + ';width:' + w + '%"></i></span>' +
-        '<span class="val">' + pct + '%</span></div>';
+    var ascIdx = A.signIndex(chart.asc);
+    var tri = W.bigThreeProfile(A.signIndex(chart.planets.sun.lon), A.signIndex(chart.planets.moon.lon), ascIdx);
+
+    var aspects = natalAspects(chart);
+    var asi = '';
+    if (aspects.length) {
+      aspects.forEach(function (x) {
+        var word = W.pairAspectWord(x.a, x.b, x.key || '');
+        var key2 = x.n === '合相' ? 'conjunction' : x.n === '六分相' ? 'sextile' : x.n === '刑相' ? 'square' : x.n === '拱相' ? 'trine' : x.n === '冲相' ? 'opposition' : 'conjunction';
+        var word2 = W.pairAspectWord(x.a, x.b, key2);
+        asi += '<div class="asi"><span class="ic">' + (x.n === '合相' ? '☌' : x.n === '六分相' ? '⚹' : x.n === '刑相' ? '□' : x.n === '拱相' ? '△' : x.n === '冲相' ? '☍' : '∠') + '</span>' +
+          '<div><b>' + PLANET_CN[x.a] + ' ' + x.n + ' ' + PLANET_CN[x.b] + '</b> <span class="wl">（偏差 ' + x.actual.toFixed(1) + '°，容许 ' + x.orb + '°）</span>' +
+          '<p class="ex">' + (word2 || x.el) + '</p></div></div>';
+      });
+    } else {
+      asi = '<p style="padding:12px 0;color:var(--muted);font-size:13px">本次计算未形成主要相位（容许度内），行星能量各自独立运转。</p>';
+    }
+
+    // 行星落座解读
+    var posList = '';
+    for (i = 0; i < keys.length; i++) {
+      k = keys[i];
+      var pi = W.planetInSign(k, chart.planets[k].sign);
+      posList += '<div class="pos-row"><span class="gl">' + pi.glyph + '</span><div><b>' + pi.title + '</b><div class="ln">' + pi.line + '</div></div></div>';
+    }
+
+    var retroNotes = '';
+    keys.forEach(function (k) {
+      if (chart.planets[k].retro && W.RETRO_WORD[k]) retroNotes += '<p>· ' + W.RETRO_WORD[k] + '</p>';
     });
 
-    res.innerHTML =
-      '<div class="pos-grid">' +
-        '<div class="pos-card"><span class="glyph">☉</span><div class="en">SUN</div><b>' + SIGNS[sunAt] + '</b><span class="deg">太阳 · ' + SIGNS[sunAt] + '座 ' + sunD + '° · ' + SIGNS_EN[sunAt] + '</span></div>' +
-        '<div class="pos-card"><span class="glyph">☾</span><div class="en">MOON</div><b>' + SIGNS[moonAt] + '</b><span class="deg">月亮 · ' + SIGNS[moonAt] + '座 ' + moonD + '° · ' + SIGNS_EN[moonAt] + '</span></div>' +
-        '<div class="pos-card"><span class="glyph">↑</span><div class="en">ASC</div><b>' + SIGNS[ascAt] + '</b><span class="deg">上升 · ' + SIGNS[ascAt] + '座 ' + ascD + '° · ' + SIGNS_EN[ascAt] + '</span></div>' +
-      '</div>' +
-      '<div class="elem-wrap"><h3>四元素分布</h3><div class="elem-bars">' + elBars + '</div></div>' +
-      '<div class="wheel-zone">' + wheelSVG(r) +
-        '<div class="wheel-legend">' +
-          '<h3>简化星盘（整宫制）</h3>' +
-          '<ul>' +
-            '<li><span class="sym">☉</span>太阳在 <b>' + SIGNS[sunAt] + '</b></li>' +
-            '<li><span class="sym">☾</span>月亮在 <b>' + SIGNS[moonAt] + '</b></li>' +
-            '<li><span class="sym">↑</span>上升在 <b>' + SIGNS[ascAt] + '</b>（第 1 宫起点）</li>' +
-          '</ul>' +
-          '<p class="note">星盘以整宫制绘制：上升所在星座为第 1 宫起点，十二宫依次排布。外环缓转仅为视觉呈现，行星符号保持正立。</p>' +
-        '</div>' +
+    var h = '';
+    h += '<div class="res-head"><h3>' + (name ? name + ' · ' : '') + '本命星盘</h3><span class="tag">等宫制 · 上升 ' + ascS.n + ' ' + (chart.asc % 30 | 0) + '° · 天顶 ' + mcS.n + ' ' + (chart.mc % 30 | 0) + '°</span></div>';
+    h += '<div class="stat-cards">' +
+      '<div class="stat-card"><div class="k">上升</div><div class="v">' + ascS.n + '</div><div class="s">' + ascS.en + '</div></div>' +
+      '<div class="stat-card"><div class="k">太阳</div><div class="v">' + W.SIGNS[chart.planets.sun.sign].n + '</div><div class="s">核心自我</div></div>' +
+      '<div class="stat-card"><div class="k">月亮</div><div class="v">' + W.SIGNS[chart.planets.moon.sign].n + '</div><div class="s">情绪底色</div></div>' +
       '</div>';
+    h += '<div class="insight"><h4>三巨头画像</h4><div class="tri"><span>' + tri.sun + '</span><span>' + tri.moon + '</span><span>' + tri.asc + '</span></div><p>' + tri.line + '</p></div>';
+    h += '<div class="grid-2">';
+    h += '<div class="planets-table"><table><tr><th></th><th>星体</th><th>落座</th><th>宫位</th><th>运动</th></tr>' + rows + '</table></div>';
+    h += '<div><div class="stat-cards" style="grid-template-columns:1fr 1fr">' +
+      '<div class="stat-card"><div class="k">主导元素</div><div class="v">' + elMax + '</div><div class="s">能量气质</div></div>' +
+      '<div class="stat-card"><div class="k">主导模式</div><div class="v">' + mdMax + '</div><div class="s">行动节奏</div></div>' +
+      '</div><div class="bars"><h4 style="font-family:var(--serif);font-size:14px;color:var(--gold);letter-spacing:.14em;margin-bottom:8px">四元素分布</h4>' + elBars + '</div>' +
+      '<div class="bars"><h4 style="font-family:var(--serif);font-size:14px;color:var(--gold);letter-spacing:.14em;margin:16px 0 8px">模式分布</h4>' + mdBars + '</div></div>';
+    h += '</div>';
+    h += '<div class="wheel-zone"><div class="wheel-wrap">' + wheelSVG(chart) + '</div>' +
+      '<div class="legend-box"><h4>星盘速览</h4><ul>' +
+      '<li><span class="sym">↑</span>上升 <b>' + ascS.n + ' ' + (chart.asc % 30 | 0) + '°</b></li>' +
+      '<li><span class="sym">☉</span>太阳 <b>' + W.SIGNS[chart.planets.sun.sign].n + '座 · ' + chart.planets.sun.house + '宫</b></li>' +
+      '<li><span class="sym">☽</span>月亮 <b>' + W.SIGNS[chart.planets.moon.sign].n + '座 · ' + chart.planets.moon.house + '宫</b></li>' +
+      '<li><span class="sym">MC</span>天顶 <b>' + mcS.n + ' ' + (chart.mc % 30 | 0) + '°</b></li>' +
+      '</ul><p class="note">等宫制：自上升起每 30° 一宫。内环行星符号按真实黄经定位；℞ 表示逆行。占星定位优先看行星落座与宫位，相位看互动张力。</p></div></div>';
+    h += '<div class="aspect-list"><h4>主要相位（容许度内）</h4>' + asi + '</div>';
+    h += '<div class="insight"><h4>行星落座解读</h4><div class="pos-list">' + posList + '</div></div>';
+    if (retroNotes) h += '<div class="insight" style="border-color:rgba(217,139,139,.35)"><h4>逆行星提示</h4>' + retroNotes + '</div>';
+    h += '<p class="chart-note">解读基于心理占星框架，供自我探索参考，不作命运断言。宫位采用等宫制；时间默认北京时区。算法：VSOP87 截断级数，行星误差 &lt;0.002°，月亮 &lt;0.1°。</p>';
 
-    res.classList.remove('show');
-    void res.offsetWidth;
-    res.classList.add('show');
-    document.getElementById('chartResult').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    el.innerHTML = h;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    // 动条
+    setTimeout(function () {
+      el.querySelectorAll('.bar-row .bar i').forEach(function (b) { b.style.width = b.getAttribute('data-w'); });
+    }, 80);
+    return chart;
+  }
+
+  /* ============ 合盘 ============ */
+  function renderSynastry(c1, c2) {
+    var el = document.getElementById('sResult');
+    var keys = ['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto'];
+    var out = [], i, j;
+    for (i = 0; i < keys.length; i++) {
+      for (j = 0; j < keys.length; j++) {
+        var a = keys[i], b = keys[j];
+        var asp = W.aspectsBetween(c1.planets[a].lon, c2.planets[b].lon, a + '|' + b);
+        asp.forEach(function (x) {
+          out.push({ a: a, b: b, n: x.n, deg: x.deg, actual: x.actual, orb: x.orb, el: x.el });
+        });
+      }
+    }
+    out.sort(function (x, y) { return x.actual - y.actual; });
+    var h = '<div class="res-head"><h3>双人合盘 · Synastry</h3><span class="tag">甲方（' + cityName(document.getElementById('sCity1').value) + '） ↔ 乙方（' + cityName(document.getElementById('sCity2').value) + '）</span></div>';
+    var asi = '', lumCount = 0, hardCount = 0;
+    out.forEach(function (x) {
+      var word2 = W.pairAspectWord(x.a, x.b, x.n === '合相' ? 'conjunction' : x.n === '六分相' ? 'sextile' : x.n === '刑相' ? 'square' : x.n === '拱相' ? 'trine' : x.n === '冲相' ? 'opposition' : 'conjunction');
+      var lum = (x.a === 'sun' || x.a === 'moon' || x.b === 'sun' || x.b === 'moon');
+      if (lum) lumCount++;
+      if (x.n === '刑相' || x.n === '冲相') hardCount++;
+      asi += '<div class="asi"><span class="ic">' + (x.n === '合相' ? '☌' : x.n === '六分相' ? '⚹' : x.n === '刑相' ? '□' : x.n === '拱相' ? '△' : x.n === '冲相' ? '☍' : '∠') + '</span>' +
+        '<div><b>' + PLANET_CN[x.a] + '（甲） ' + x.n + ' ' + PLANET_CN[x.b] + '（乙）</b> <span class="wl">偏差 ' + x.actual.toFixed(1) + '°</span>' +
+        '<p class="ex">' + (word2 || x.el) + '</p></div></div>';
+    });
+    if (!out.length) asi = '<p style="padding:12px 0;color:var(--muted);font-size:13px">两盘在容许度内未形成主要交叉相位。</p>';
+    h += '<div class="stat-cards">' +
+      '<div class="stat-card"><div class="k">相位总数</div><div class="v">' + out.length + '</div><div class="s">能量触点</div></div>' +
+      '<div class="stat-card"><div class="k">日月相位</div><div class="v">' + lumCount + '</div><div class="s">情感纽带</div></div>' +
+      '<div class="stat-card"><div class="k">紧张相位</div><div class="v">' + hardCount + '</div><div class="s">成长功课</div></div>' +
+      '</div>';
+    var insight = '';
+    if (lumCount >= 2) insight += '双方日月之间形成 ' + lumCount + ' 组相位，情感联结清晰，彼此容易“看见”与“感受”对方。';
+    else if (lumCount === 1) insight += '日月之间有一组相位，关系里有一根稳定的情感线索，其余需靠相处积累。';
+    else insight += '日月相位较少，这段关系更依赖共同经历与价值观建立，而非天然默契。';
+    if (hardCount >= 4) insight += '紧张相位较多：关系里“吸引力”与“摩擦感”并存，处理得好，这恰恰是彼此成长的镜子。';
+    h += '<div class="insight"><h4>合盘速读</h4><p>' + insight + '</p></div>';
+    h += '<div class="aspect-list"><h4>交叉相位清单</h4>' + asi + '</div>';
+    h += '<p class="chart-note">合盘相位：甲方行星与乙方行星的交叉角度。日/月/水/金/火代表日常与情感层面，外行星相位则标记更深的关系基调。容许度：日月 ±8°，个人行星 ±5°，外行星 ±4°。</p>';
+    el.innerHTML = h;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  /* ============ 行运 ============ */
+  function renderTransit(natal, jdT) {
+    var el = document.getElementById('tResult');
+    var tPos = A.withRetrograde(jdT);
+    var tKeys = ['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto'];
+    var nKeys = ['sun','moon','mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto'];
+    var out = [], i, j;
+    for (i = 0; i < tKeys.length; i++) {
+      for (j = 0; j < nKeys.length; j++) {
+        var a = tKeys[i], b = nKeys[j];
+        var asp = W.aspectsBetween(tPos[a].lon, natal.planets[b].lon, a + '|' + b);
+        asp.forEach(function (x) {
+          out.push({ a: a, b: b, n: x.n, deg: x.deg, actual: x.actual, orb: x.orb, el: x.el });
+        });
+      }
+    }
+    out.sort(function (x, y) {
+      var sx = (x.a === 'sun' || x.a === 'moon' || x.a === 'mercury' || x.a === 'venus' || x.a === 'mars') ? 0 : 1;
+      var sy = (y.a === 'sun' || y.a === 'moon' || y.a === 'mercury' || y.a === 'venus' || y.a === 'mars') ? 0 : 1;
+      return sx - sy || x.actual - y.actual;
+    });
+    var h = '<div class="res-head"><h3>行运过境 · Transits</h3><span class="tag">本命盘 ↔ ' + tPos.sun.lon.toFixed(0) + '° 时刻行运</span></div>';
+    var asi = '', i;
+    for (i = 0; i < out.length; i++) {
+      var x = out[i];
+      var word2 = W.pairAspectWord(x.a, x.b, x.n === '合相' ? 'conjunction' : x.n === '六分相' ? 'sextile' : x.n === '刑相' ? 'square' : x.n === '拱相' ? 'trine' : x.n === '冲相' ? 'opposition' : 'conjunction');
+      var fast = (x.a === 'sun' || x.a === 'moon' || x.a === 'mercury' || x.a === 'venus' || x.a === 'mars');
+      asi += '<div class="asi"><span class="ic">' + (x.n === '合相' ? '☌' : x.n === '六分相' ? '⚹' : x.n === '刑相' ? '□' : x.n === '拱相' ? '△' : x.n === '冲相' ? '☍' : '∠') + '</span>' +
+        '<div><b>' + (fast ? '' : '⌁ ') + PLANET_CN[x.a] + '（行运） ' + x.n + ' 本命' + PLANET_CN[x.b] + '</b> <span class="wl">偏差 ' + x.actual.toFixed(1) + '°</span>' +
+        '<p class="ex">' + (word2 || x.el) + '</p></div></div>';
+    }
+    if (!out.length) asi = '<p style="padding:12px 0;color:var(--muted);font-size:13px">此刻行运与本命盘在容许度内无主要相位，适合平稳推进日常事务。</p>';
+    var fastN = 0, slowN = 0;
+    out.forEach(function (x) { if (x.a === 'sun' || x.a === 'moon' || x.a === 'mercury' || x.a === 'venus' || x.a === 'mars') fastN++; else slowN++; });
+    h += '<div class="stat-cards">' +
+      '<div class="stat-card"><div class="k">快速行运</div><div class="v">' + fastN + '</div><div class="s">近日级影响</div></div>' +
+      '<div class="stat-card"><div class="k">慢速行运</div><div class="v">' + slowN + '</div><div class="s">季度/年级影响</div></div>' +
+      '<div class="stat-card"><div class="k">当前日位置</div><div class="v">' + W.SIGNS[A.signIndex(tPos.sun.lon)].n + '</div><div class="s">行运太阳</div></div>' +
+      '</div>';
+    h += '<div class="aspect-list"><h4>行运相位清单</h4>' + asi + '</div>';
+    var retroT = '';
+    tKeys.forEach(function (k) { if (tPos[k].retro && W.RETRO_WORD[k]) retroT += '<p>· ' + W.RETRO_WORD[k] + '</p>'; });
+    if (retroT) h += '<div class="insight" style="border-color:rgba(217,139,139,.35)"><h4>行运逆行星提示</h4>' + retroT + '</div>';
+    h += '<p class="chart-note">行运解读：快速行星（日/月/水/金/火）触发日常事件与情绪节奏；外行星（木星及以外）行运标记人生章节的开启与收束。容许度：日月 ±8°，个人行星 ±5°，外行星 ±4°。</p>';
+    el.innerHTML = h;
+    el.style.display = 'block';
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  /* ============ 客户档案 ============ */
+  var STORE_KEY = 'asteria-clients';
+  function loadClients() { try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; } catch (e) { return []; } }
+  function saveClients(list) { localStorage.setItem(STORE_KEY, JSON.stringify(list)); }
+  function renderClientList() {
+    var list = loadClients(), box = document.getElementById('clientList'), i;
+    box.innerHTML = '';
+    if (!list.length) { document.getElementById('clientEmpty').style.display = 'block'; return; }
+    document.getElementById('clientEmpty').style.display = 'none';
+    for (i = 0; i < list.length; i++) {
+      var c = list[i];
+      var d = document.createElement('div');
+      d.className = 'client-item';
+      d.innerHTML = '<div><div class="nm">' + c.name + '</div><div class="sub">' + c.birth + ' · ' + c.city + ' · ' + c.savedAt + '</div></div>' +
+        '<div style="display:flex;gap:6px"><button class="mini-btn" data-load="' + i + '">载入</button><button class="mini-btn danger" data-del="' + i + '">删</button></div>';
+      box.appendChild(d);
+    }
+    box.querySelectorAll('[data-load]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var c = loadClients()[+b.getAttribute('data-load')];
+        if (!c) return;
+        document.getElementById('nName').value = c.name;
+        document.getElementById('nDate').value = c.date;
+        document.getElementById('nTime').value = c.time;
+        document.getElementById('nCity').value = c.city;
+        document.getElementById('nDst').checked = !!c.dst;
+        document.getElementById('nGo').click();
+        document.querySelector('[data-tab="natal"]').click();
+      });
+    });
+    box.querySelectorAll('[data-del]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var list2 = loadClients();
+        list2.splice(+b.getAttribute('data-del'), 1);
+        saveClients(list2);
+        renderClientList();
+      });
+    });
+  }
+
+  /* ============ 事件绑定 ============ */
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('on'); b.setAttribute('aria-selected', 'false'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('on'); });
+      btn.classList.add('on'); btn.setAttribute('aria-selected', 'true');
+      document.getElementById('panel-' + btn.getAttribute('data-tab')).classList.add('on');
+    });
+  });
+
+  var lastNatal = null, lastNatalName = '';
+  document.getElementById('nGo').addEventListener('click', function () {
+    var date = document.getElementById('nDate').value;
+    if (!date) { alert('请先选择出生日期'); return; }
+    var name = document.getElementById('nName').value.trim() || '';
+    var chart = calcChart(date, document.getElementById('nTime').value, document.getElementById('nCity').value, document.getElementById('nDst').checked);
+    if (!chart) { alert('日期无效'); return; }
+    lastNatal = chart; lastNatalName = name;
+    renderNatal(chart, name);
+  });
+  document.getElementById('saveClient').addEventListener('click', function () {
+    if (!lastNatal) { alert('请先生成一次本命盘'); return; }
+    var name = document.getElementById('nName').value.trim() || '未命名客户';
+    var list = loadClients();
+    list.push({
+      name: name,
+      date: document.getElementById('nDate').value,
+      time: document.getElementById('nTime').value,
+      city: document.getElementById('nCity').value,
+      dst: document.getElementById('nDst').checked,
+      birth: W.SIGNS[A.signIndex(lastNatal.planets.sun.lon)].n + '日 · ' + W.SIGNS[A.signIndex(lastNatal.planets.moon.lon)].n + '月',
+      city: cityName(document.getElementById('nCity').value),
+      savedAt: new Date().toLocaleDateString('zh-CN')
+    });
+    saveClients(list);
+    renderClientList();
+    alert('已存入客户档案：' + name);
+  });
+
+  document.getElementById('sGo').addEventListener('click', function () {
+    var d1 = document.getElementById('sDate1').value, d2 = document.getElementById('sDate2').value;
+    if (!d1 || !d2) { alert('请填写双方出生日期'); return; }
+    var c1 = calcChart(d1, document.getElementById('sTime1').value, document.getElementById('sCity1').value, document.getElementById('sDst1').checked);
+    var c2 = calcChart(d2, document.getElementById('sTime2').value, document.getElementById('sCity2').value, document.getElementById('sDst2').checked);
+    renderSynastry(c1, c2);
+  });
+
+  document.getElementById('tGo').addEventListener('click', function () {
+    var date = document.getElementById('tDate').value;
+    var when = document.getElementById('tWhen').value;
+    if (!date || !when) { alert('请填写本命日期与行运时刻'); return; }
+    var chart = calcChart(date, document.getElementById('tTime').value, document.getElementById('tCity').value, document.getElementById('tDst').checked);
+    if (!chart) { alert('本命日期无效'); return; }
+    var wp = when.split('T');
+    var dp = wp[0].split('-').map(Number), tp = wp[1].split(':').map(Number);
+    var jdT = A.julianDay(dp[0], dp[1], dp[2], tp[0], tp[1] || 0);
+    renderTransit(chart, jdT);
   });
 
   /* ============ 滚动揭示 ============ */
-  (function(){
-    var els = document.querySelectorAll('.reveal');
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
-      });
-    }, {threshold: 0.12});
-    els.forEach(function(el){ io.observe(el); });
-  })();
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  renderClientList();
+  /* 默认填充示例（便于首次体验） */
+  if (!document.getElementById('nDate').value) {
+    var today = new Date();
+    var mm = String(today.getMonth() + 1).padStart(2, '0'), dd = String(today.getDate()).padStart(2, '0');
+    var todayStr = today.getFullYear() + '-' + mm + '-' + dd;
+    document.getElementById('nDate').value = todayStr;
+    document.getElementById('tDate').value = '2000-01-01';
+    document.getElementById('tWhen').value = todayStr + 'T12:00';
+    document.getElementById('sDate1').value = todayStr;
+    document.getElementById('sDate2').value = '2000-01-01';
+  }
 })();
 </script>
 </body>

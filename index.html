@@ -265,6 +265,22 @@ header.scrolled{
   display:flex;align-items:center;gap:10px;margin-bottom:20px;
 }
 .card .kicker svg{width:13px;height:13px}
+.retro-card{grid-column:1/-1;padding:28px 32px}
+.retro-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+.retro-head b{font-family:var(--serif);font-size:16px;color:#F4F1E8;font-weight:700;letter-spacing:.08em}
+.retro-head span{font-size:12px;color:var(--gold-dim);letter-spacing:.08em}
+.retro-list{display:flex;gap:12px;flex-wrap:wrap}
+.retro-item{
+  display:flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid var(--line-soft);
+  border-radius:30px;background:rgba(5,9,20,.5);font-size:13.5px;letter-spacing:.04em;min-width:118px;
+}
+.retro-item .gl{font-size:19px;color:var(--gold-soft)}
+.retro-item b{color:#F4F1E8;font-weight:500}
+.retro-item .st{font-size:11px;color:var(--muted);margin-left:auto}
+.retro-item.ret{background:rgba(217,139,139,.08);border-color:rgba(217,139,139,.3)}
+.retro-item.ret .st{color:#D98B8B}
+.retro-item.ret .gl{color:#E8B3B3}
+@media(max-width:640px){.retro-item{min-width:calc(50% - 6px)}}
 .moon-stage{display:flex;align-items:center;gap:22px}
 .moon-disc{width:104px;height:104px;flex-shrink:0}
 .moon-disc svg{width:100%;height:100%}
@@ -888,6 +904,12 @@ footer{
         </div>
         <ul class="energy-list" id="energyList" style="margin-top:22px;border-top:1px dashed var(--line-soft);padding-top:18px"></ul>
       </div>
+
+      <div class="card reveal d4 retro-card">
+        <div class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M17 2.8l2 2-2 2M5 21.2l-2-2 2-2"/><path d="M3.5 7.5A8.5 8.5 0 0 1 16.5 4M20.5 16.5A8.5 8.5 0 0 1 7.5 20"/><path d="M12 12l6.5-8M12 12L5.5 20"/></svg>行星顺逆行</div>
+        <div class="retro-head"><b>今日行星动向</b><span>太阳与月亮无逆行 · 仅列出行星 · 实时计算</span></div>
+        <div id="retroList" class="retro-list"></div>
+      </div>
     </div>
 
     <p class="sky-note reveal">
@@ -1129,6 +1151,9 @@ footer{
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M9 5v3"/></svg>预约</a>
 </nav>
 
+<script src="astro-vsop.js"></script>
+<script src="astro-pluto.js"></script>
+<script src="astro.js"></script>
 <script>
 (function(){
   'use strict';
@@ -1406,6 +1431,26 @@ footer{
     var html = '';
     out.forEach(function(r){ html += '<li><span class="tag">' + r[0] + '</span><span>' + r[1] + '</span></li>'; });
     document.getElementById('energyList').innerHTML = html;
+  })();
+
+  /* ============ 行星顺逆行（VSOP87 高精度） ============ */
+  (function(){
+    var box = document.getElementById('retroList');
+    if (!box || typeof globalThis.Astro === 'undefined') return;
+    var A = globalThis.Astro;
+    var keys = ['mercury','venus','mars','jupiter','saturn','uranus','neptune','pluto'];
+    var CN = { mercury:'水星', venus:'金星', mars:'火星', jupiter:'木星', saturn:'土星', uranus:'天王星', neptune:'海王星', pluto:'冥王星' };
+    var GL = { mercury:'☿', venus:'♀', mars:'♂', jupiter:'♃', saturn:'♄', uranus:'♅', neptune:'♆', pluto:'♇' };
+    var jd = A.julianDay(now.getFullYear(), now.getMonth() + 1, now.getDate(), 12, 0);
+    var pos = A.withRetrograde(jd);
+    var html = '';
+    keys.forEach(function (k) {
+      var p = pos[k];
+      var sg = A.SIGNS[A.signIndex(p.lon)];
+      var ret = p.retro;
+      html += '<div class="retro-item' + (ret ? ' ret' : '') + '"><span class="gl">' + GL[k] + '</span><b>' + CN[k] + '</b><span class="st">' + sg + ' · ' + (ret ? '逆行 ℞' : '顺行') + '</span></div>';
+    });
+    box.innerHTML = html;
   })();
 
   /* ============ 服务卡片 ============ */
