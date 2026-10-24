@@ -560,6 +560,31 @@ footer{
   font-size:12px;color:var(--gold-dim);letter-spacing:.08em;
 }
 
+/* ============ 移动端底部固定导航 ============ */
+.tabbar{display:none}
+@media (max-width:720px){
+  body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
+  .tabbar{
+    display:flex;position:fixed;left:0;right:0;bottom:0;z-index:58;
+    height:calc(66px + env(safe-area-inset-bottom));
+    padding-bottom:env(safe-area-inset-bottom);
+    background:rgba(5,9,20,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);
+  }
+  .tabbar a{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    min-height:44px;color:var(--muted);font-size:10.5px;letter-spacing:.08em;
+    transition:color .25s;position:relative;
+  }
+  .tabbar a svg{width:20px;height:20px}
+  .tabbar a.on{color:var(--gold-soft)}
+  .tabbar a.on::before{
+    content:"";position:absolute;top:0;left:24%;right:24%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .to-top{bottom:calc(84px + env(safe-area-inset-bottom))}
+}
+
 /* 返回顶部 */
 .to-top{
   position:fixed;right:28px;bottom:30px;z-index:40;
@@ -571,6 +596,60 @@ footer{
 .to-top.show{opacity:1;pointer-events:auto}
 .to-top:hover{border-color:var(--gold);transform:translateY(-3px)}
 .to-top svg{width:18px;height:18px}
+
+/* ============ 首屏今日星象速览 ============ */
+.hero-live{
+  margin-top:40px;display:inline-flex;gap:0;flex-wrap:wrap;
+  border:1px solid var(--line-soft);border-radius:4px;overflow:hidden;
+  background:rgba(10,18,38,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.hero-live .hl{
+  display:flex;align-items:center;gap:12px;padding:13px 22px;
+  border-right:1px solid var(--line-soft);min-height:52px;
+}
+.hero-live .hl:last-child{border-right:none}
+.hero-live .hl .ic{
+  font-size:20px;line-height:1;color:var(--gold-soft);width:30px;text-align:center;
+}
+.hero-live .hl b{font-family:var(--serif);font-weight:700;font-size:15.5px;color:#F4F1E8;display:block;letter-spacing:.04em}
+.hero-live .hl span{font-size:11px;color:var(--muted);letter-spacing:.14em}
+.hero-live .live-note{width:100%;padding:8px 22px;font-size:11.5px;color:var(--gold-dim);letter-spacing:.1em;border-top:1px solid var(--line-soft)}
+.hero-live .live-note a{color:var(--gold-soft)}
+
+/* ============ 服务卡片详情链接 ============ */
+.svc .meta a.svc-link{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--gold-soft);font-size:12.5px;letter-spacing:.16em;transition:color .3s;
+}
+.svc .meta a.svc-link:hover{color:var(--gold)}
+.svc .meta a.svc-link svg{width:13px;height:13px}
+
+/* ============ 能量节奏（合规版今日节奏） ============ */
+.energy-list{display:flex;flex-direction:column;gap:12px}
+.energy-list li{list-style:none;display:flex;gap:14px;align-items:flex-start;font-size:14.5px;letter-spacing:.04em;color:var(--text)}
+.energy-list .tag{
+  font-size:11.5px;letter-spacing:.2em;color:#1A1206;
+  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  border-radius:2px;padding:3px 10px;flex-shrink:0;font-weight:600;margin-top:6px;
+}
+
+/* ============ 见证前后对比 ============ */
+.testi .shift{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  font-size:12px;letter-spacing:.12em;color:var(--muted);margin-bottom:22px;
+}
+.testi .shift .s1,.testi .shift .s2{
+  border:1px solid var(--line-soft);border-radius:20px;padding:4px 16px;
+}
+.testi .shift .arrow{color:var(--gold);font-family:var(--display)}
+.testi .shift .s2{color:var(--gold-soft);border-color:var(--line)}
+.testi .avatar{
+  width:54px;height:54px;border-radius:50%;margin:0 auto 10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-weight:700;font-size:20px;color:var(--gold-soft);
+  border:1px solid var(--line);
+  background:radial-gradient(circle at 40% 30%, rgba(217,179,107,.22), rgba(10,18,38,.6) 70%);
+}
 
 /* ============ 滚动揭示 ============ */
 .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s ease}
@@ -671,7 +750,7 @@ footer{
       <li><a href="#about">关于</a></li>
       <li><a href="#services">服务</a></li>
       <li><a href="#zodiac">十二宫</a></li>
-      <li><a href="#tool">星图查询</a></li>
+      <li><a href="chart.html">星图工具</a></li>
       <li><a href="#voices">见证</a></li>
     </ul>
     <a class="nav-cta" href="#contact">预约咨询</a>
@@ -689,7 +768,7 @@ footer{
       <div class="hero-logo">
         <svg class="k-logo k-logo-hero" aria-label="Kingsley 星语占星馆"><use href="#k-logo"/></svg>
       </div>
-      <div class="hero-eyebrow"><span class="en">CELESTIAL ORACLE</span>仰望星空 · 解读天命</div>
+      <div class="hero-eyebrow"><span class="en">CELESTIAL ORACLE</span>仰望星空 · 观照自我</div>
       <h1>
         <span class="line">以星盘为镜</span>
         <span class="line"><span class="accent">照见人生剧本</span></span>
@@ -700,7 +779,22 @@ footer{
       </p>
       <div class="hero-cta">
         <a class="btn btn-gold" href="#contact">预约星象咨询</a>
-        <a class="btn btn-ghost" href="#sky-sec">查看今日星象</a>
+        <a class="btn btn-ghost" href="chart.html">免费查星图</a>
+      </div>
+      <div class="hero-live" id="heroLive" aria-label="今日星象速览">
+        <div class="hl">
+          <span class="ic" id="hlMoonIc">☾</span>
+          <div><b id="hlMoon">计算中</b><span>今日月相</span></div>
+        </div>
+        <div class="hl">
+          <span class="ic" id="hlSunIc">☉</span>
+          <div><b id="hlSun">计算中</b><span>太阳行运</span></div>
+        </div>
+        <div class="hl">
+          <span class="ic">☽</span>
+          <div><b id="hlMoonSign">计算中</b><span>月亮过境</span></div>
+        </div>
+        <div class="live-note">由天文算法实时计算 · <a href="#sky-sec">查看今日星象 →</a></div>
       </div>
       <div class="hero-stats">
         <div class="stat"><b>12</b><span>年观星之路</span></div>
@@ -753,7 +847,7 @@ footer{
   <div class="wrap">
     <div class="eyebrow reveal"><span class="num">I</span>今日星象 · THE LIVING SKY</div>
     <h2 class="title reveal">此刻的星空，<span class="accent">正在说话</span></h2>
-    <p class="sub-lead reveal d1">以下月相与太阳行运由本地天文算法依据今日日期实时计算，宜忌依星历传统整理，供你参考。</p>
+    <p class="sub-lead reveal d1">以下月相、日月行运与能量节奏，均由本地天文算法依据今日日期实时计算，供你参考。</p>
 
     <div class="sky-cards">
       <div class="card reveal d1">
@@ -784,8 +878,15 @@ footer{
       </div>
 
       <div class="card reveal d3">
-        <div class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l2.2 5.3L20 8l-4.4 3.7L17.3 17 12 14l-5.3 3 .7-5.3L3 8l5.8-.7L12 3z"/></svg>今日宜忌</div>
-        <ul class="luck-list" id="luckList"></ul>
+        <div class="kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3a9 9 0 1 0 9 9M12 3a9 9 0 0 1 0 18 9 9 0 1 0-9-9 9 9 0 0 1 0-9z" opacity=".7"/></svg>月亮行运 · 能量节奏</div>
+        <div class="big-sign">
+          <div class="glyph" id="moonGlyph">☾</div>
+          <div>
+            <b id="moonSign">计算中</b>
+            <p>今日月亮位于 <span class="deg" id="moonDeg">—</span></p>
+          </div>
+        </div>
+        <ul class="energy-list" id="energyList" style="margin-top:22px;border-top:1px dashed var(--line-soft);padding-top:18px"></ul>
       </div>
     </div>
 
@@ -830,7 +931,7 @@ footer{
 <section id="services">
   <div class="wrap">
     <div class="eyebrow reveal"><span class="num">III</span>服务项目 · THE ARTS</div>
-    <h2 class="title reveal">六门星象之术，<span class="accent">各有所司</span></h2>
+    <h2 class="title reveal">以专业，<span class="accent">守护你的探索</span></h2>
     <p class="sub-lead reveal d1">线上或线下均可进行，每场咨询均为深度一对一，可预约中文或英文。</p>
 
     <div class="svc-grid" id="svcGrid"></div>
@@ -841,7 +942,7 @@ footer{
 <section id="zodiac">
   <div class="wrap">
     <div class="eyebrow reveal"><span class="num">IV</span>黄道十二宫 · THE ZODIAC</div>
-    <h2 class="title reveal">十二座星座之门，<span class="accent">点击开启</span></h2>
+    <h2 class="title reveal">十二种能量原型，<span class="accent">都值得被认真认识</span></h2>
     <p class="sub-lead reveal d1">每一座门后，都藏着一种人格原型与一段星辰叙事。</p>
 
     <div class="zod-grid" id="zodGrid"></div>
@@ -862,7 +963,7 @@ footer{
   <div class="wrap">
     <div class="eyebrow reveal"><span class="num">V</span>星图查询 · THE TOOL</div>
     <h2 class="title reveal">输入生辰，<span class="accent">揭开你的星图</span></h2>
-    <p class="sub-lead reveal d1">太阳星座是你的核心人格名片。留下出生日期，即刻读取属于你的星座密钥。</p>
+    <p class="sub-lead reveal d1">太阳星座是你的核心人格名片。想同时读取太阳、月亮、上升与四元素分布，可前往完整星图工具。</p>
 
     <div class="tool-panel reveal d1">
       <form class="tool-form" id="toolForm">
@@ -872,6 +973,11 @@ footer{
         </div>
         <button class="tool-submit" type="submit">揭开星图</button>
       </form>
+
+      <p style="margin-top:22px;font-size:13px;color:var(--gold-dim);letter-spacing:.06em">
+        想要完整的太阳 / 月亮 / 上升 + 四元素分布 + 简化星盘？→
+        <a href="chart.html" style="color:var(--gold-soft);text-decoration:underline">前往星图工具页（免费）</a>
+      </p>
 
       <div class="tool-result" id="toolResult"></div>
     </div>
@@ -921,6 +1027,7 @@ footer{
 
       <div class="form-panel reveal d1">
         <form id="contactForm" novalidate>
+          <input type="hidden" name="_subject" value="新预约：星象咨询">
           <div class="form-grid">
             <div class="field">
               <label for="cName">怎么称呼你</label>
@@ -960,7 +1067,7 @@ footer{
           <b>预约已送达星辰</b>
           <p>星象师将在 24 小时内与你联系。<br>在此之前，不妨抬头看看今晚的月亮。</p>
         </div>
-        <p class="form-note">本页面为演示站点，表单提交不会真实发送，联系方式均为示例占位。</p>
+        <p class="form-note" id="formNote">表单服务配置中，当前为演示模式。提交的预约信息将加密发送至星象师邮箱。</p>
       </div>
     </div>
   </div>
@@ -989,7 +1096,9 @@ footer{
           <ul>
             <li><a href="#sky-sec">今日星象</a></li>
             <li><a href="#zodiac">黄道十二宫</a></li>
-            <li><a href="#tool">星图查询</a></li>
+            <li><a href="chart.html">星图工具</a></li>
+            <li><a href="services.html">服务详情</a></li>
+            <li><a href="privacy.html">隐私政策</a></li>
             <li><a href="#contact">预约咨询</a></li>
           </ul>
         </div>
@@ -1005,6 +1114,20 @@ footer{
 <button class="to-top" id="toTop" aria-label="返回顶部">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </button>
+
+<!-- ============ 移动端底部固定导航 ============ -->
+<nav class="tabbar" aria-label="移动端导航">
+  <a href="#top" data-sec="top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11.5 12 4l9 7.5M5 10v10h14V10"/></svg>首页</a>
+  <a href="#sky-sec" data-sec="sky-sec">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></svg>星象</a>
+  <a href="chart.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.4"/><path d="M12 3v3.6M12 17.4V21M3 12h3.6M17.4 12H21"/></svg>星图</a>
+  <a href="#zodiac" data-sec="zodiac">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.2 5.3L20 8l-4.4 3.7L17.3 17 12 14l-5.3 3 .7-5.3L3 8l5.8-.7L12 3z"/></svg>十二宫</a>
+  <a href="#contact" data-sec="contact">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M9 5v3"/></svg>预约</a>
+</nav>
 
 <script>
 (function(){
@@ -1114,6 +1237,7 @@ footer{
   var hamburger = document.getElementById('hamburger');
   var navLinks = document.getElementById('navLinks');
   var navAnchors = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  var tabLinks = Array.prototype.slice.call(document.querySelectorAll('.tabbar a[data-sec]'));
 
   function onScroll(){
     var y = window.pageYOffset;
@@ -1127,6 +1251,9 @@ footer{
     }
     navAnchors.forEach(function(a){
       a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+    tabLinks.forEach(function(a){
+      a.classList.toggle('on', a.getAttribute('data-sec') === current);
     });
   }
   window.addEventListener('scroll', onScroll, {passive:true});
@@ -1143,11 +1270,16 @@ footer{
   toTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior: reduced ? 'auto' : 'smooth'}); });
 
   /* ============ 天文数据：月相 + 太阳行运 ============ */
-  function julianDay(y, m, d){
-    if (m <= 2){ y -= 1; m += 12; }
-    var A = Math.floor(y / 100);
-    var B = 2 - A + Math.floor(A / 4);
-    return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524.5;
+  /* 儒略日：h/min 为北京时间（默认正午 12:00），内部转换为世界时并处理跨天 */
+  function julianDay(y, m, d, h, min){
+    h = h === undefined ? 12 : h;
+    min = min === undefined ? 0 : min;
+    var ut = h + min / 60 - 8;
+    if (ut < 0){ ut += 24; d -= 1; }
+    var dt = new Date(Date.UTC(y, m - 1, d));
+    var uy = dt.getUTCFullYear(), um = dt.getUTCMonth() + 1, ud = dt.getUTCDate();
+    if (um <= 2){ uy -= 1; um += 12; }
+    return 367*uy - Math.floor(7*(uy + Math.floor((um+9)/12))/4) + Math.floor(275*um/9) + ud + 1721013.5 + ut/24;
   }
   function moonPhaseInfo(date){
     var synodic = 29.53058867;
@@ -1179,6 +1311,24 @@ footer{
     lambda = ((lambda % 360) + 360) % 360;
     return lambda;
   }
+  /* 月亮黄经（低精度截断级数，误差约 ±1°，用于日常参考） */
+  function moonLongitude(date){
+    var J = julianDay(date.getFullYear(), date.getMonth() + 1, date.getDate());
+    var n = J - 2451545.0, R = Math.PI / 180;
+    var Lp = 218.316 + 13.176396 * n;
+    var D  = 297.850 + 12.190749 * n;
+    var M  = 357.529 +  0.9856003 * n;
+    var Mp = 134.963 + 13.064993 * n;
+    var F  = 93.272  + 13.229350 * n;
+    var lam = Lp + 6.289 * Math.sin(Mp * R) + 1.274 * Math.sin((2*D - Mp) * R)
+      + 0.658 * Math.sin(2*D * R) + 0.214 * Math.sin(2*Mp * R)
+      - 0.114 * Math.sin(F * R) + 0.058 * Math.sin((2*D - 2*Mp) * R);
+    return ((lam % 360) + 360) % 360;
+  }
+  function signName(lon){
+    var i = Math.floor(lon / 30) % 12;
+    return { idx: i, sign: ZODIAC[i], deg: Math.floor(lon % 30) };
+  }
 
   /* ============ 十二宫数据 ============ */
   var ZODIAC = [
@@ -1205,45 +1355,67 @@ footer{
   document.getElementById('moonPct').textContent = Math.round(moon.illum * 100) + '%';
 
   var lon = solarLongitude(now);
-  var signIdx = Math.floor(lon / 30) % 12;
-  var deg = Math.floor(lon % 30);
-  var sign = ZODIAC[signIdx];
-  document.getElementById('sunSign').textContent = sign.name + ' · ' + sign.en;
-  document.getElementById('sunGlyph').textContent = sign.glyph;
-  document.getElementById('sunDeg').textContent = sign.name + ' ' + deg + '°';
+  var sunAt = signName(lon);
+  document.getElementById('sunSign').textContent = sunAt.sign.name + ' · ' + sunAt.sign.en;
+  document.getElementById('sunGlyph').textContent = sunAt.sign.glyph;
+  document.getElementById('sunDeg').textContent = sunAt.sign.name + ' ' + sunAt.deg + '°';
 
-  /* 今日宜忌（按日期确定性选取） */
-  var AUSPICIOUS = ['静心冥想','整理旧物','签署文书','拜访长辈','规划行程','开启新项目','修复关系','复盘过去'];
-  var INAUSPICIOUS = ['冲动决策','熬夜透支','借贷担保','争执口角','拖延搁置','贸然远行'];
+  var mlon = moonLongitude(now);
+  var moonAt = signName(mlon);
+  document.getElementById('moonSign').textContent = moonAt.sign.name + ' · ' + moonAt.sign.en;
+  document.getElementById('moonGlyph').textContent = moonAt.sign.glyph;
+  document.getElementById('moonDeg').textContent = moonAt.sign.name + ' ' + moonAt.deg + '°';
+
+  /* 首屏今日星象速览小卡片 */
+  (function(){
+    var els = {
+      hlMoon: document.getElementById('hlMoon'),
+      hlMoonIc: document.getElementById('hlMoonIc'),
+      hlSun: document.getElementById('hlSun'),
+      hlSunIc: document.getElementById('hlSunIc'),
+      hlMoonSign: document.getElementById('hlMoonSign')
+    };
+    if (!els.hlMoon) return;
+    els.hlMoon.textContent = moon.name;
+    els.hlMoonIc.textContent = moonAt.sign.glyph;
+    els.hlSun.textContent = sunAt.sign.name;
+    els.hlSunIc.textContent = sunAt.sign.glyph;
+    els.hlMoonSign.textContent = moonAt.sign.name;
+  })();
+
+  /* 今日能量节奏（中性建议，替代旧「宜忌」，由星期+日期确定性生成） */
+  var RHYTHMS = [
+    ['舒展','适合把想法说出口，表达与沟通更顺畅'],
+    ['专注','适合推进需要耐心的任务，深度工作状态佳'],
+    ['连接','适合联系旧友、修复关系，对话易有共鸣'],
+    ['沉淀','适合复盘与整理，先向内看，再向外走'],
+    ['重启','适合开启新计划，第一块积木最容易落下'],
+    ['慢行','适合放慢节奏，给身体与情绪留白'],
+    ['整理','适合清扫空间与清理思绪，轻装上路'],
+    ['滋养','适合好好吃一餐、早睡一刻，照顾自己优先']
+  ];
   (function(){
     var start = new Date(now.getFullYear(), 0, 0);
     var doy = Math.floor((now - start) / 86400000);
-    var seed = doy * 2654435761 % 4294967296;
-    function pick(arr, n){
-      var pool = arr.slice(), out = [];
-      for (var i = 0; i < n && pool.length; i++){
-        seed = (seed * 1103515245 + 12345) % 2147483648;
-        var k = seed % pool.length;
-        out.push(pool.splice(k, 1)[0]);
-      }
-      return out;
+    var seed = (doy * 2654435761 + now.getDay() * 97) % 4294967296;
+    var pool = RHYTHMS.slice(), out = [];
+    for (var i = 0; i < 3 && pool.length; i++){
+      seed = (seed * 1103515245 + 12345) % 2147483648;
+      out.push(pool.splice(seed % pool.length, 1)[0]);
     }
-    var good = pick(AUSPICIOUS, 3);
-    var bad = pick(INAUSPICIOUS, 3);
     var html = '';
-    good.forEach(function(g){ html += '<li><span class="tag">宜</span><span>' + g + '</span></li>'; });
-    bad.forEach(function(b){ html += '<li class="warn"><span class="tag">忌</span><span>' + b + '</span></li>'; });
-    document.getElementById('luckList').innerHTML = html;
+    out.forEach(function(r){ html += '<li><span class="tag">' + r[0] + '</span><span>' + r[1] + '</span></li>'; });
+    document.getElementById('energyList').innerHTML = html;
   })();
 
   /* ============ 服务卡片 ============ */
   var SERVICES = [
-    {icon:'chart', title:'本命星盘解读', desc:'从出生时刻绘制你的天宫图，解读性格底色、天赋使命与人生课题，看见"我是谁"的完整星图。', price:'¥499 起', tag:'约90分钟', },
-    {icon:'couple', title:'双人合盘', desc:'比对两颗星的相位与宫位，看清关系中的引力与功课。亲密关系、事业合伙、亲子缘分皆可。', price:'¥699 起', tag:'约120分钟'},
-    {icon:'orbit', title:'行运推演', desc:'推演未来 12 个月的行运轨迹，标出人生的窗口期与低潮期，教你顺势而为、逆势蓄力。', price:'¥599 起', tag:'约90分钟'},
-    {icon:'hourglass', title:'择日择时', desc:'结婚、开业、签约、搬家、出行，为你挑选最吉的星辰时刻，让重要决定乘势而起。', price:'¥399 起', tag:'含3个候选吉日'},
-    {icon:'wealth', title:'事业与财运指引', desc:'结合行运与宫位，定位你的财富密码、事业赛道与贵人星象，把天赋兑现为路径。', price:'¥599 起', tag:'约90分钟'},
-    {icon:'heart', title:'情感与婚姻咨询', desc:'以月亮与金星为镜，看清情感模式与依恋剧本，走出亲密关系的迷雾，学会好好相爱。', price:'¥699 起', tag:'约120分钟'}
+    {icon:'chart', anchor:'natal', title:'本命星盘解读', desc:'从出生时刻绘制你的天宫图，解读性格底色、天赋使命与人生课题，看见"我是谁"的完整星图。', price:'¥499 起', tag:'约90分钟'},
+    {icon:'couple', anchor:'synastry', title:'双人合盘', desc:'比对两颗星的相位与宫位，看清关系中的引力与功课。亲密关系、事业合伙、亲子缘分皆可。', price:'¥699 起', tag:'约120分钟'},
+    {icon:'orbit', anchor:'transit', title:'行运推演', desc:'推演未来 12 个月的行运轨迹，标出人生的窗口期与沉淀期，教你顺势而为、逆势蓄力。', price:'¥599 起', tag:'约90分钟'},
+    {icon:'hourglass', anchor:'election', title:'择日择时', desc:'结婚、开业、签约、搬家、出行，为你挑选能量相合的星辰时刻，让重要决定更从容。', price:'¥399 起', tag:'含3个候选时段'},
+    {icon:'wealth', anchor:'career', title:'事业与财运指引', desc:'结合行运与宫位，梳理你的事业赛道、贵人星象与阶段性机会，把天赋兑现为路径。', price:'¥599 起', tag:'约90分钟'},
+    {icon:'heart', anchor:'love', title:'情感与婚姻咨询', desc:'以月亮与金星为镜，看清情感模式与依恋剧本，走出亲密关系的迷雾，学会好好相爱。', price:'¥699 起', tag:'约120分钟'}
   ];
   var ICONS = {
     chart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8.6"/><path d="M12 3.4v4.2M12 16.4v4.2M3.4 12h4.2M16.4 12h4.2M5.6 5.6l3 3M15.4 15.4l3 3M18.4 5.6l-3 3M8.6 15.4l-3 3"/><circle cx="12" cy="12" r="2.4" fill="currentColor" stroke="none"/></svg>',
@@ -1260,7 +1432,9 @@ footer{
         '<div class="icon">' + ICONS[s.icon] + '</div>' +
         '<h3>' + s.title + '</h3>' +
         '<p>' + s.desc + '</p>' +
-        '<div class="meta"><span class="price">' + s.price + '</span><span>' + s.tag + '</span></div>' +
+        '<div class="meta"><span class="price">' + s.price + '</span>' +
+        '<a class="svc-link" href="services.html#' + s.anchor + '">了解详情<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5l7 7-7 7"/></svg></a>' +
+        '</div>' +
       '</div>';
     });
     document.getElementById('svcGrid').innerHTML = html;
@@ -1374,10 +1548,10 @@ footer{
 
   /* ============ 见证轮播 ============ */
   var TESTIMONIALS = [
-    {quote:'她只说了一句"你总是在该停的时候继续往前"，我就愣住了。盘上看得见的，是连我自己都没承认的执念。', name:'云女士', tag:'本命星盘解读'},
-    {quote:'年初提醒的"木星过境、谨慎扩张"，年中真的应验了。从那以后，每个季度我都会回来复盘一次行运。', name:'周先生', tag:'行运推演'},
-    {quote:'合盘结果让我放下了三年的纠结。原来我们不是不爱，是两个月亮在错频——而星星已经给了重新调频的方法。', name:'林小姐', tag:'双人合盘'},
-    {quote:'择日选的婚礼日，当天晴空万里；更神奇的是，先生求婚的日子恰巧就是盘上我标注的"吉日"。信了。', name:'陈小姐', tag:'择日择时'}
+    {quote:'她只说了一句"你总是在该停的时候继续往前"，我就愣住了。盘上看得见的，是连我自己都没承认的执念。', name:'云女士', tag:'本命星盘解读', av:'云', before:'总在疲于奔命', after:'学会了允许自己停一停'},
+    {quote:'年初提醒的"木星过境、谨慎扩张"，后来真的照进了现实。从那以后，每个季度我都会回来复盘一次行运。', name:'周先生', tag:'行运推演', av:'周', before:'凭直觉大步扩张', after:'每个季度先复盘再行动'},
+    {quote:'合盘结果让我放下了三年的纠结。原来我们不是不爱，是两个月亮在错频——而星星已经给了重新调频的方法。', name:'林小姐', tag:'双人合盘', av:'林', before:'在关系里反复内耗', after:'看清模式，重新调频'},
+    {quote:'择日选的婚礼日当天晴空万里。好的开始是一种仪式感——回头再看那张盘，更像一份写给未来的信。', name:'陈小姐', tag:'择日择时', av:'陈', before:'对日期将信将疑', after:'带着仪式感开启新阶段'}
   ];
   (function(){
     var track = document.getElementById('testiTrack');
@@ -1385,9 +1559,13 @@ footer{
     var html = '', dots = '';
     TESTIMONIALS.forEach(function(t){
       html += '<figure class="testi">' +
+        '<div class="shift"><span class="s1">' + t.before + '</span><span class="arrow">→</span><span class="s2">' + t.after + '</span></div>' +
         '<div class="stars">' + Array(5).fill('<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.2 5.3L20 8l-4.4 3.7L17.3 17 12 14l-5.3 3 .7-5.3L3 8l5.8-.7L12 3z"/></svg>').join('') + '</div>' +
         '<blockquote>' + t.quote + '</blockquote>' +
-        '<figcaption class="who"><b>' + t.name + '</b><span>' + t.tag + '</span></figcaption>' +
+        '<figcaption class="who">' +
+          '<div class="avatar">' + t.av + '</div>' +
+          '<b>' + t.name + '</b><span>' + t.tag + '</span>' +
+        '</figcaption>' +
       '</figure>';
     });
     TESTIMONIALS.forEach(function(_, i){ dots += '<i data-i="' + i + '"></i>'; });
@@ -1412,10 +1590,16 @@ footer{
     go(0); play();
   })();
 
-  /* ============ 预约表单 ============ */
+  /* ============ 预约表单（Formspree AJAX；endpoint 为占位时自动降级演示） ============ */
   (function(){
+    var FORMSPREE_ENDPOINT = 'https://formspree.io/f/xxxxxxxx'; // ← 注册 formspree.io 后替换为真实 endpoint
+    var LIVE = FORMSPREE_ENDPOINT.indexOf('xxxx') === -1;
     var form = document.getElementById('contactForm');
     var ok = document.getElementById('formOk');
+    var note = document.getElementById('formNote');
+    if (!LIVE && note){
+      note.textContent = '表单服务正在配置中（当前为演示模式）。配置完成后，预约信息将加密发送至星象师邮箱。';
+    }
     form.addEventListener('submit', function(e){
       e.preventDefault();
       var name = document.getElementById('cName').value.trim();
@@ -1430,10 +1614,25 @@ footer{
       var btn = form.querySelector('.form-submit');
       btn.textContent = '正在送往星辰…';
       btn.disabled = true;
-      setTimeout(function(){
+      function done(){
         form.style.display = 'none';
         ok.classList.add('show');
-      }, 900);
+      }
+      if (!LIVE){
+        setTimeout(done, 900); // 演示模式：等用户配置真实 endpoint 后走真实发送
+        return;
+      }
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(res){
+        if (res.ok) done();
+        else throw new Error('formspree:' + res.status);
+      }).catch(function(){
+        btn.disabled = false;
+        btn.textContent = '发送失败，请稍后重试';
+      });
     });
   })();
 

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>隐私政策 — Kingsley · 星语占星馆</title>
+<meta name="description" content="Kingsley 星语占星馆隐私政策：我们如何收集、使用与保护你的个人信息，以及你的删除权与联系方式。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230A1226' stroke='%23D9B36B' stroke-width='1.5'/%3E%3Cpath d='M32 10c1.4 13.5 8.5 20.6 22 22-13.5 1.4-20.6 8.5-22 22-1.4-13.5-8.5-20.6-22-22 13.5-1.4 20.6-8.5 22-22z' fill='%23D9B36B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Cinzel:wght@400;600;700;900&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --night:#050914;--space:#0A1226;--indigo:#121C3E;--nebula:#251B4A;
+  --gold:#D9B36B;--gold-soft:#EFD9A7;--gold-dim:#8A7144;--silver:#C7D3EA;
+  --text:#E8EAF4;--muted:#98A1C4;--line:rgba(217,179,107,.18);--line-soft:rgba(199,211,234,.12);
+  --card:rgba(12,18,40,.62);--card-hover:rgba(18,28,62,.85);
+  --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --display:"Cinzel","Noto Serif SC",var(--serif);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.8;overflow-x:hidden}
+::selection{background:rgba(217,179,107,.35);color:#fff}
+a{color:inherit;text-decoration:none}
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+.sky-tint{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(1200px 700px at 78% 18%,rgba(37,27,74,.38),transparent 62%),radial-gradient(900px 600px at 18% 82%,rgba(18,28,62,.5),transparent 60%),linear-gradient(180deg,rgba(5,9,20,.35),rgba(5,9,20,.72) 70%)}
+.wrap{max-width:860px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+section{position:relative;z-index:2;padding:64px 0}
+.k-logo{display:block;overflow:visible}
+.k-logo-sm{width:150px;height:42px}
+.k-spark{transform-box:fill-box;transform-origin:center;animation:kTwinkle 2.6s ease-in-out infinite}
+.k-s2{animation-delay:.7s}.k-s3{animation-delay:1.4s}
+@keyframes kTwinkle{0%,100%{opacity:.12;transform:scale(.55)}50%{opacity:1;transform:scale(1.12)}}
+.k-core{transform-box:fill-box;transform-origin:center;animation:kCore 3.2s ease-in-out infinite}
+@keyframes kCore{0%,100%{filter:drop-shadow(0 0 2px rgba(239,217,167,.45))}50%{filter:drop-shadow(0 0 9px rgba(239,217,167,.95))}}
+.k-dash{transform-box:fill-box;transform-origin:center;animation:kSpin 30s linear infinite}
+@keyframes kSpin{to{transform:rotate(360deg)}}
+.k-moon{animation:kMoon 4.4s ease-in-out infinite}
+@keyframes kMoon{0%,100%{opacity:.65}50%{opacity:1}}
+.k-name{font-family:var(--display);font-weight:700;font-size:34px;letter-spacing:.12em}
+.k-sub{font-family:var(--display);font-size:10px;letter-spacing:.44em}
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .4s,box-shadow .4s}
+header.scrolled{background:rgba(5,9,20,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+.nav{max-width:1240px;margin:0 auto;padding:0 28px;height:76px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:baseline;gap:12px}
+.brand .zh{font-family:var(--serif);font-weight:700;font-size:21px;letter-spacing:.14em;color:#F4F1E8}
+.brand .zh .g{color:var(--gold)}
+.nav-back{display:flex;align-items:center;gap:18px;list-style:none}
+.nav-back a{font-size:14px;letter-spacing:.08em;color:var(--muted);padding:8px 0;transition:color .3s}
+.nav-back a:hover{color:var(--gold-soft)}
+.nav-cta{padding:11px 26px;border:1px solid var(--gold);color:var(--gold-soft);font-size:14px;letter-spacing:.14em;border-radius:2px;transition:all .35s}
+.nav-cta:hover{background:var(--gold);color:#1A1206;box-shadow:0 0 26px rgba(217,179,107,.45)}
+.page-head{padding-top:150px;text-align:center}
+.page-head .en{font-family:var(--display);color:var(--gold-dim);font-size:12px;letter-spacing:.5em;margin-bottom:14px}
+.page-head h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.6vw,46px);letter-spacing:.08em;color:#F7F4EC}
+.page-head h1 .accent{color:var(--gold-soft)}
+.updated{color:var(--gold-dim);font-size:12px;letter-spacing:.16em;margin-top:16px}
+.policy{background:var(--card);border:1px solid var(--line-soft);border-radius:8px;padding:48px 46px;margin-top:36px}
+.policy h2{font-family:var(--serif);font-weight:700;font-size:19px;letter-spacing:.1em;color:var(--gold);margin:34px 0 16px;display:flex;align-items:center;gap:12px}
+.policy h2:first-child{margin-top:0}
+.policy h2::before{content:"✦";color:var(--gold-dim);font-size:13px}
+.policy p{color:var(--muted);font-size:15px;margin-bottom:14px;letter-spacing:.02em}
+.policy ul{list-style:none;margin-bottom:14px}
+.policy li{color:var(--muted);font-size:14.5px;margin-bottom:12px;padding-left:24px;position:relative;line-height:1.75}
+.policy li::before{content:"✦";position:absolute;left:0;top:0;color:var(--gold-dim);font-size:11px}
+.policy .note{
+  border-left:2px solid var(--gold);background:linear-gradient(90deg,rgba(217,179,107,.08),transparent);
+  padding:18px 22px;font-size:13.5px;color:var(--muted);letter-spacing:.04em;line-height:2;
+}
+footer{position:relative;z-index:2;border-top:1px solid var(--line-soft);background:rgba(5,9,20,.7);padding:44px 0 40px;margin-top:60px}
+.foot-row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.foot-row .copy{font-size:12px;color:var(--gold-dim);letter-spacing:.08em}
+.foot-row nav{display:flex;gap:26px;flex-wrap:wrap}
+.foot-row nav a{font-size:12.5px;color:var(--muted);letter-spacing:.12em;transition:color .3s}
+.foot-row nav a:hover{color:var(--gold-soft)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (max-width:720px){.nav-back .hide-m{display:none}.policy{padding:32px 24px}.page-head{padding-top:140px}}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="kGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8A7144"/>
+      <stop offset=".5" stop-color="#EFD9A7"/>
+      <stop offset="1" stop-color="#B98C45"/>
+      <animate attributeName="x1" values="-0.3;1.3;-0.3" dur="5s" repeatCount="indefinite"/>
+    </linearGradient>
+    <symbol id="k-logo" viewBox="0 0 340 96">
+      <circle cx="64" cy="48" r="34" fill="none" stroke="rgba(217,179,107,.55)" stroke-width="1"/>
+      <g class="k-dash">
+        <circle cx="64" cy="48" r="27.5" fill="none" stroke="rgba(217,179,107,.32)" stroke-width=".7" stroke-dasharray="2 5"/>
+        <circle cx="95" cy="48" r="1.6" fill="#D9B36B" opacity=".8"/>
+        <circle cx="33" cy="48" r="1.4" fill="#D9B36B" opacity=".7"/>
+        <circle cx="64" cy="20.5" r="1.5" fill="#EFD9A7" opacity=".75"/>
+        <circle cx="64" cy="75.5" r="1.3" fill="#C7D3EA" opacity=".7"/>
+        <circle cx="82" cy="29" r="1.2" fill="#D9B36B" opacity=".65"/>
+        <circle cx="46" cy="67" r="1.2" fill="#D9B36B" opacity=".65"/>
+      </g>
+      <path class="k-core" d="M64 24 C66 40, 72 46, 88 48 C72 50, 66 56, 64 72 C62 56, 56 50, 40 48 C56 46, 62 40, 64 24 Z" fill="#EFD9A7"/>
+      <path class="k-moon" d="M76 34 a13 13 0 1 0 0 28 a10 10 0 1 1 0 -28z" fill="none" stroke="#C7D3EA" stroke-width="1.3"/>
+      <path class="k-spark" d="M30 16.5 C30 20.1, 33.4 24, 37.5 24 C33.4 24, 30 27.9, 30 31.5 C30 27.9, 26.6 24, 22.5 24 C26.6 24, 30 20.1, 30 16.5 Z" fill="#EFD9A7"/>
+      <path class="k-spark k-s2" d="M99 16 C99 19.3, 101.7 22, 105 22 C101.7 22, 99 24.7, 99 28 C99 24.7, 96.3 22, 93 22 C96.3 22, 99 19.3, 99 16 Z" fill="#C7D3EA"/>
+      <path class="k-spark k-s3" d="M30 64 C30 67.3, 32.7 70, 36 70 C32.7 70, 30 72.7, 30 76 C30 72.7, 27.3 70, 24 70 C27.3 70, 30 67.3, 30 64 Z" fill="#D9B36B"/>
+      <text class="k-name" x="118" y="58" fill="url(#kGrad)">Kingsley</text>
+      <text class="k-sub" x="120" y="79" fill="rgba(217,179,107,.6)">CELESTIAL ORACLE</text>
+    </symbol>
+  </defs>
+</svg>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="sky-tint" aria-hidden="true"></div>
+
+<header id="header">
+  <nav class="nav" aria-label="主导航">
+    <a class="brand" href="index.html">
+      <svg class="k-logo k-logo-sm" aria-label="Kingsley 星语占星馆"><use href="#k-logo"/></svg>
+      <span class="zh">星语<span class="g">占星馆</span></span>
+    </a>
+    <ul class="nav-back">
+      <li class="hide-m"><a href="index.html#sky-sec">今日星象</a></li>
+      <li class="hide-m"><a href="chart.html">星图工具</a></li>
+      <li class="hide-m"><a href="services.html">服务详情</a></li>
+      <li><a href="index.html#contact">预约咨询</a></li>
+    </ul>
+    <a class="nav-cta" href="index.html#contact">预约咨询</a>
+  </nav>
+</header>
+
+<main>
+  <section class="page-head" id="top">
+    <div class="wrap">
+      <div class="en reveal">PRIVACY POLICY · 隐私政策</div>
+      <h1 class="reveal">你的信息，<span class="accent">如星夜般被守护</span></h1>
+      <p class="updated reveal d1">更新日期：2026 年 10 月</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="policy reveal d1">
+
+        <h2>我们收集什么</h2>
+        <p>在预约咨询、使用星图工具与订阅邮件时，我们仅收集提供服务所必需的信息：</p>
+        <ul>
+          <li><b style="color:var(--gold-soft);font-weight:500">联系方式</b>：你填写的称呼、微信 / 手机 / 邮箱，用于预约确认与咨询回访</li>
+          <li><b style="color:var(--gold-soft);font-weight:500">出生信息</b>：出生日期、时间与城市，仅用于排盘计算，不作其他用途</li>
+          <li><b style="color:var(--gold-soft);font-weight:500">咨询内容</b>：你在表单中自愿留言的困惑描述</li>
+        </ul>
+
+        <h2>我们如何使用</h2>
+        <ul>
+          <li>完成星盘排算与预约服务</li>
+          <li>发送咨询确认、报告与售后答疑</li>
+          <li>在你同意的前提下，发送节日问候与星象月刊（可随时退订）</li>
+        </ul>
+
+        <h2>谁可以接触</h2>
+        <ul>
+          <li>除星象师本人与协助排盘的必要人员外，不向任何第三方出售、出租或共享你的信息</li>
+          <li>预约表单通过第三方表单服务商（Formspree / Web3Forms）传输，全程 HTTPS 加密；服务商仅作中转，不读取咨询内容</li>
+        </ul>
+
+        <h2>存储与删除</h2>
+        <ul>
+          <li>咨询资料仅保留用于售后答疑与复盘的合理周期</li>
+          <li>你可随时通过下方联系方式，要求查看、更正或删除你的全部个人信息，我们将在 7 个工作日内处理</li>
+        </ul>
+
+        <h2>合规依据</h2>
+        <p>本政策遵循《中华人民共和国个人信息保护法》（PIPL）关于知情同意、最小必要与删除权的要求。</p>
+
+        <h2>免责声明</h2>
+        <p class="note">星象解读基于心理占星与传统文化视角，用于自我探索与生活反思，仅供个人参考。<b style="color:var(--gold-soft);font-weight:500">不构成医疗、心理治疗、法律或投资建议。</b>如有身心不适或重大决策，请咨询相应领域的专业人士。本站星图工具采用简化天文算法（误差约 ±1°），精确星历请以专业软件为准。</p>
+
+        <h2>联系我们</h2>
+        <p>如需查询、更正或删除个人信息，或有任何隐私疑问，请发送邮件至 <b style="color:var(--gold-soft);font-weight:500">hello@kingsley.example</b>，主题注明"隐私事务"。</p>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span class="copy">© 2026 Kingsley · 星语占星馆 · 星象咨询属传统文化与心理慰藉范畴，仅供参考</span>
+    <nav>
+      <a href="index.html">返回首页</a>
+      <a href="chart.html">星图工具</a>
+      <a href="services.html">服务详情</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canvas = document.getElementById('sky');
+  var ctx = canvas.getContext('2d');
+  var W = 0, H = 0, stars = [];
+  function resizeSky(){
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    stars = [];
+    var count = Math.round(Math.min(240, W * H / 7000));
+    for (var i = 0; i < count; i++){
+      stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.4 + 0.4, a: 0.15 + Math.random() * 0.5, ph: Math.random() * Math.PI * 2, sp: 0.5 + Math.random() * 1.5 });
+    }
+  }
+  function drawSky(t){
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++){
+      var s = stars[i];
+      var a = reduced ? s.a : s.a + Math.sin(t * 0.001 * s.sp + s.ph) * 0.18;
+      a = Math.max(0.05, Math.min(0.9, a));
+      ctx.globalAlpha = a; ctx.fillStyle = '#DCE4F4';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  function loop(t){ if (!reduced) drawSky(t); requestAnimationFrame(loop); }
+  resizeSky(); window.addEventListener('resize', resizeSky);
+  if (reduced) drawSky(0); else requestAnimationFrame(loop);
+  var header = document.getElementById('header');
+  window.addEventListener('scroll', function(){ header.classList.toggle('scrolled', window.pageYOffset > 40); }, {passive:true});
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold: 0.1});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+})();
+</script>
+</body>
+</html>
